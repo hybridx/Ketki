@@ -1,0 +1,64 @@
+.banner {
+  background: url("/assets/logos/doctor.png") no-repeat top;
+  /* background-attachment: fixed; */
+  background-size: cover;
+  min-height: 500px;
+}
+
+.form-control {
+  border-radius: 0 !important;
+  width: 215px;
+  border-color: #7FC4FD;
+  color: #BCE0FD
+}
+
+::placeholder {
+  color: #BCE0FD;
+}
+
+.form-group {
+  padding-top: 20%;
+  padding-bottom: 20%;
+}
+
+
+.select_box {
+  width: 100px;
+  overflow: hidden;
+  position: relative;
+  padding: 10px 0;
+}
+
+.select_box:after {
+  /* width: 0;  */
+  /* height: 0;  */
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #2699FB;
+  position: absolute;
+  top: 40%;
+  right: 5px;
+  content: "";
+  z-index: 98;
+}
+
+.select_box select {
+  width: 220px;
+  border: 0;
+  position: relative;
+  z-index: 99;
+  background: none;
+  color: #BCE0FD;
+}
+
+.select_box option {
+    color: #BCE0FD;
+}
+
+.btn {
+  width: 215px;
+  border-radius: 0 !important;
+  background-color: #15B515;
+  color: white;
+  font-size: 25px;
+}
