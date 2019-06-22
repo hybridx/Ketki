@@ -1,0 +1,64 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+header {
+  height: 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  height: 35.8rem;
+  background-image: url('./assets/doctor.png');
+  background-size: cover; 
+}
+
+.rc-container {
+  height: 30rem;
+}
+
+footer {
+  height: 5.6rem;
+  background-color: #5fcc5f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+nav {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+li {
+  display: inline;
+}
+.li-image {
+  margin-right: 20px;
+  height: 35px;
+  width: 35px;
+  height: 100%;
+}
+
+.li-links {
+  color: #15b515; 
+  margin-right: 40px;
+}
+li:hover {
+  cursor: pointer;
+}
