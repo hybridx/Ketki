@@ -5,7 +5,7 @@ import json
 
 from models import Models
 
-models = Models("localhost","admin","root","ketki")
+models = Models("https://cybzilla.com","cybzilla_ketki","#KETKI@2019","cybzilla_ketki")
 
 checkSlotsForDate = models.checkSlotsForDate
 generateOTP = models.generateOTP

@@ -31,7 +31,6 @@ class Models():
 		try:
 			OTP = generateRandom()
 			sql = "INSERT INTO Contact_OTP (phone, OTP) VALUES('{}', {}) ON DUPLICATE KEY UPDATE OTP = {}".format(phone,int(OTP),int(OTP))
-
 			data = self.cursor.execute(sql)
 
 			self.db.commit()
