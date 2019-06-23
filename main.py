@@ -9,6 +9,7 @@ models = Models("localhost","admin","root","ketki")
 
 checkSlotsForDate = models.checkSlotsForDate
 generateOTP = models.generateOTP
+bookAppointment = models.bookAppointment
 
 
 app = Flask(__name__)
@@ -23,7 +24,7 @@ class CheckSlots(Resource):
 	"""returns None if all slots are available else returns booked slots"""
 	def post(self):
 		data = json.loads(str(request.get_data(), "utf-8"))
-		data = checkSlotsForDate(data["date"])
+		data = checkSlotsForDate(data["date"],data["phone"])
 		return jsonify(data)
 
 	def get(self):
@@ -41,8 +42,15 @@ class UserOTP(Resource):
 class Book(Resource):
 	"""Match OTP -> check if user already has booked for the same day : update
 	   if already booked else insert data -> return status"""
-	def get(self):
-		data = None
+	def post(self):
+		data = json.loads(str(request.get_data(), "utf-8"))
+		data = bookAppointment(data["otp"],
+							   data["name"],
+							   data["gender"],
+							   data["age"],
+							   data["phone"],
+							   data["date"],
+							   data["time"])
 		return jsonify(data)
 		
 
