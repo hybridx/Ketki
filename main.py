@@ -5,8 +5,8 @@ import json
 
 from models import Models
 
-models = Models("https://cybzilla.com","cybzilla_ketki","#KETKI@2019","cybzilla_ketki")
-
+# models = Models("cybzilla.com","cybzilla_ketki","#KETKI@2019","cybzilla_ketki")
+models = Models("remotemysql.com", "lOk6yQMejO", "ZmMpIwQ9dO", "lOk6yQMejO")
 checkSlotsForDate = models.checkSlotsForDate
 generateOTP = models.generateOTP
 bookAppointment = models.bookAppointment
