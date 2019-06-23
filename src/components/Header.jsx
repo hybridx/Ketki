@@ -6,9 +6,9 @@ import twitter from '../assets/twitter.png';
 import instagram from '../assets/instagram.png';
 
 const Header = ({}) => (
-    <header>
+    <header class="header">
             <Link to={'/'} ><img class="logo-image" src={logo} /></Link>
-            <nav>
+            <nav class="nav">
                 <ul>
                     <li class="li-links"><Link to={'/reviews'} >Testimonials</Link></li>
                     <li className="li-links"><Link to={'/contact'} >Contact</Link></li>

@@ -7,13 +7,13 @@ function hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-function bookAppointment(e){
-    e.preventDefault();
-}
+    function bookAppointment(e){
+        e.preventDefault();
+    }
 
-function onChange(e){
+    function onChange(e){
 
-}
+    }
 const WrappedHomeForm = ({ form }) => {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = form;
 
@@ -49,7 +49,7 @@ const WrappedHomeForm = ({ form }) => {
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please select time!' }],
                     })(
-                        <TimePicker /* disabledHours={()=> getDisabledHours} */ minuteStep={60} format={format} />
+                        <TimePicker  />
                     )}
                 </Form.Item>
 
