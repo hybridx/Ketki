@@ -1,36 +1,47 @@
 html, body {
   margin: 0;
   padding: 0;
+  color: white;
+  background: #fbfbfb;
+  font-family: 'Montserrat', sans-serif;
+  background-image: url('./assets/doctor.png');
+  background-size: cover; 
+}
+
+.app {
+  height: 100vh;
 }
 
 a {
   text-decoration: none;
-  color: inherit;
 }
 .header {
   height: 6rem;
   display: flex;
   justify-content: space-between;
+  font-size: 1.3rem;
   align-items: center;
 }
 
 .container {
-  height: 35.8rem;
-  background-image: url('./assets/doctor.png');
-  background-size: cover; 
+  height: 100%;
 }
 
 .rc-container {
   height: 30rem;
 }
 
-footer {
+.footer {
   height: 5.6rem;
-  background-color: #5fcc5f;
+  background-color: #56575a78;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   color: white;
+  font-size: 1.5rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .nav {
@@ -61,4 +72,16 @@ li {
 }
 li:hover {
   cursor: pointer;
+}
+
+.signUpForm{
+  margin-left: 5rem !important;
+  padding-top: 5rem !important;
+}
+.contact-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+.contact-container div {
+  flex-basis: 40%;
 }
