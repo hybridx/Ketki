@@ -18,7 +18,7 @@ api = Api(app)
 
 @app.route('/')
 def index():
-	return 'models.HelloWorld()'
+	return render_template("index.html")
 
 class CheckSlots(Resource):
 	"""returns None if all slots are available else returns booked slots"""
