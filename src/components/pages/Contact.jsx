@@ -29,8 +29,8 @@ const Contact = ({}) => (
                     defaultZoom={mapConfig.zoom}
                 >
                 <AnyReactComponent 
-                    lat={59.955413} 
-                    lng={30.337844} 
+                    lat={18.4997677} 
+                    lng={73.9443173} 
                     text={'Ketki clinic'} 
                 />
                 </GoogleMapReact>         

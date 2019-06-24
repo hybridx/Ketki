@@ -85,3 +85,8 @@ li:hover {
 .contact-container div {
   flex-basis: 40%;
 }
+.content-box {
+  border-top: 1px solid #eee;
+  text-align: center;
+  padding: 25px 0;
+}
