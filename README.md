@@ -18,14 +18,24 @@ data['date'] = '2019-06-24'
 data["time"] = 6
 
 # Requests and response on a local machine
->>> requests.post('http://localhost:5000/api/availableSlots',json=data).text
-'{\n  "bookedSlots": [], \n  "can_book": true\n}\n'
->>> requests.post('http://localhost:5000/api/OTP',json=data).text
-'1\n'
->>> requests.post('http://localhost:5000/api/book',json=data).text
-'{\n  "ErrorType": "OTP-MISMATCH", \n  "status": "ERROR"\n}\n'
->>> data["otp"] = 996359
->>> requests.post('http://localhost:5000/api/book',json=data).text
-'{\n  "status": "BOOKED"\n}\n'
->>> 
+-----------------------------------
+requests.post('http://localhost:5000/api/availableSlots',json=data).text
+
+response -> '{\n  "bookedSlots": [], \n  "can_book": true\n}\n'
+
+-----------------------------------
+requests.post('http://localhost:5000/api/OTP',json=data).text
+
+response -> '1\n'
+
+-----------------------------------
+requests.post('http://localhost:5000/api/book',json=data).text
+
+response -> '{\n  "ErrorType": "OTP-MISMATCH", \n  "status": "ERROR"\n}\n'
+
+-----------------------------------
+data["otp"] = 996359
+requests.post('http://localhost:5000/api/book',json=data).text
+
+response -> '{\n  "status": "BOOKED"\n}\n'
 ```
