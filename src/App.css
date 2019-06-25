@@ -28,7 +28,13 @@ a {
 }
 
 .rc-container {
-  height: 30rem;
+  height: calc(100vh - 6rem - 5.6rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  color: white;
+  width: 80%;
+  margin: auto;
 }
 
 .footer {
@@ -89,4 +95,30 @@ li:hover {
   border-top: 1px solid #eee;
   text-align: center;
   padding: 25px 0;
+}
+
+.reviewBox{
+  padding: 10px;
+  z-index: 10;
+
+}
+
+.reviewBox div {
+  transition: transform 0.2s;
+  height: 100%;
+  width: 100%;
+  background: #b0bac7a1;
+
+}
+
+.reviewBox div:hover{
+  transform: scale(1.4); 
+}
+
+@media screen and (max-width: 60em) {
+  .rc-container {
+    /* -ms-grid-rows: (1fr)[4]; */
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
