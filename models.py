@@ -23,7 +23,7 @@ class Models():
 				data["bookedSlots"].append(slot[0])
 		
 		self.db.commit()
-
+		self.db.close()
 		return data
 
 
@@ -34,9 +34,11 @@ class Models():
 			data = self.cursor.execute(sql)
 
 			self.db.commit()
+			self.db.close()
 			return data
 		except Exception as e:
 			print("Generate OTP -> ", e)
+			self.db.close()
 			return False
 
 	def bookAppointment(self, OTP, name, gender, age, phone, date, time):
@@ -48,6 +50,7 @@ class Models():
 					data["status"] = "BOOKED"
 			else:
 				data["ErrorType"] = "OTP-MISMATCH"
+			self.db.close()
 			return data
 		except Exception as e:
 			print("Book Appointment ->", e)
@@ -62,11 +65,14 @@ class Models():
 			results = self.cursor.fetchall()
 			self.db.commit()
 			if results:
+				self.db.close()
 				return True
 			else:
+				self.db.close()
 				return False
 		except Exception as e:
 			print("Check OTP", e)
+			self.db.close()
 			return False
 
 	def checkUserBooking(self, phone, date):
@@ -80,7 +86,9 @@ class Models():
 
 			if phone in data:
 				if data[phone] > 1:
+					self.db.close()
 					return False
+			self.db.close()
 			return True
 		except Exception as e:
 			print("Check User Booking ->", e)
@@ -92,7 +100,7 @@ class Models():
 
 			self.cursor.execute(sql)
 			self.db.commit()
-
+			self.db.close()
 			return True
 		except Exception as e:
 			print("Insert Data", e)
