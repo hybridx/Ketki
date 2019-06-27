@@ -16,6 +16,7 @@ data["age"] = 24
 data["phone"] = '9988776655'
 data['date'] = '2019-06-24'
 data["time"] = 6
+data['gender'] = 'o'
 
 # Requests and response on a local machine
 -----------------------------------
