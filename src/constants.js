@@ -1,4 +1,4 @@
-export const API_URL = 'http://192.168.0.101:5000/api';
+export const API_URL = 'https://pilesinjection.in/';
 export const mapConfig = {
     center: {lat: 59.95, lng: 30.33},
     zoom: 11

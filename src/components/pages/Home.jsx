@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Form, Icon, Steps, Input, message, InputNumber, Button, DatePicker, TimePicker, Select, Modal } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
+import { getAvailableSlots, sendOTPToUser, booNewAppointment } from '../../api';
 
 const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const DELAY = 1500;
@@ -29,29 +30,49 @@ const format = 'HH:mm';
         const [visible, setShowModal ] = useState(false);
         const [name, setName ] = useState('');
         const [mobileNumber, setMobileNumber ] = useState('');
-        const [gender, setGender ] = useState('male');
+        const [age, setAgeNumber ] = useState('');
+        const [gender, setGender ] = useState('m');
         const [date, setDate ] = useState('');
         const [time, setTime ] = useState('');
         const [currentStep, setCurrentStep] = useState(0);
         const [OTP, setOTP] = useState('');
         const [captchaValue, setCaptchaValue] = useState();
         const [expired, setExpired] = useState('false');
-
+        const [ disabledHours, setDisabledHours ] = useState([]);
         const _reCaptchaRef = React.createRef();
         
+        const userData = {
+            otp: OTP,
+            name: name,
+            age: age,
+            phone: mobileNumber,
+            date: date,
+            time: time,
+            gender: gender
+        }
         // Only show error after a field is touched.
         const usernameError = isFieldTouched('username') && getFieldError('username');
         const dateError = isFieldTouched('date') && getFieldError('date');
         const timeError = isFieldTouched('time') && getFieldError('time');
         const phoneError = isFieldTouched('phone') && getFieldError('phone');
         const genderError = isFieldTouched('gender') && getFieldError('gender');
+        const ageError = isFieldTouched('age') && getFieldError('age');
         
         const OtpJsx = (
+            <React.Fragment>
             <div class="content-box">
-            {getFieldDecorator('OTP', {
-                rules: [{ required: true, message: 'Please input OTP!', len: 6 }],
-                })(<Input type="number" size="large" placeholder="Enter OTP" onChange={onOTPChange} style={{ width: '50%' }} />)}
+            <Input type="number" size="large" placeholder="Enter OTP" onChange={onOTPChange} style={{ width: '50%' }} required />
             </div>
+                <div class="content-box">
+                <ReCAPTCHA
+                    style={{ display: "inline-block" }}
+                    theme="light"
+                    ref={_reCaptchaRef}
+                    sitekey={TEST_SITE_KEY}
+                    onChange={handleCaptchaChange}
+                />
+            </div>
+        </React.Fragment>
         )
 
         const doneJsx = (
@@ -80,10 +101,6 @@ const format = 'HH:mm';
               content: OtpJsx,
             },
             {
-              title: 'Enter Captcha',
-              content: CaptchaJsx,
-            },
-            {
                 title: 'Done',
                 content: doneJsx,
               },
@@ -91,18 +108,23 @@ const format = 'HH:mm';
 
         function handleCaptchaChange(value){
         console.log("Captcha value:", value);
-        setCaptchaValue({ value });
+        setCaptchaValue(value);
         // if value is null recaptcha expired
         if (value === null) setExpired({ expired: "true" });
         };
 
         function bookAppointment(e){
             e.preventDefault();
-            console.log(name, mobileNumber, gender, date, time);
+            sendOTPToUser(userData)
+                .then(data => console.log(data));
+            console.log(name, mobileNumber, gender, date, time, disabledHours, OTP);
         }
         
         function onPhoneChange(e){
             setMobileNumber(e.target.value);
+        }
+        function onAgeChange(e){
+            setAgeNumber(e.target.value);
         }
 
         function onNameChange(e){
@@ -110,19 +132,20 @@ const format = 'HH:mm';
         }
         
         function onTimeChange(timeObj, timeString){
-            setTime(timeString);
+            // setTime(timeString);
+            setTime(timeString.substr(0,2));
         }
         
         function onDateChange(dateObj, dateString){
-            setDate(dateString)
+            setDate(dateString);
+            getAvailableSlots(userData)
+                .then(data => { setDisabledHours(data.bookedSlots) })
         }
     
         function onGenderChange(selectedGender){
             setGender(selectedGender);
         }
-        function getDisabledHours(){
-            
-        } 
+
         function onOTPChange(e){
             setOTP(e.target.value);
         }
@@ -139,16 +162,19 @@ const format = 'HH:mm';
             setShowModal(false);
         };
 
-        function next() {
-            // let currentStep = currentStep + 1;
-            setCurrentStep(currentStep + 1);
-          }
-        
-        function prev() {
-            // let currentStep = currentStep - 1;
+        function goForward() {
+            if( currentStep === 0 ) {
+                booNewAppointment(userData)
+                .then(data => captchaValue && data.book === 'OK'  && setCurrentStep(currentStep + 1));
+            }
+        }
+        function goBackward() {
             setCurrentStep(currentStep - 1);
           }
 
+        function isFormValid() {
+            return name && mobileNumber && gender && date && time;
+        }
         const datePrefixSelector = getFieldDecorator('prefix', {
             initialValue: '91',
         })(
@@ -177,19 +203,26 @@ const format = 'HH:mm';
                         rules: [{ required: true, message: 'Please input your phone number!', len: 10 }],
                         })(<Input type="number" size="large" placeholder="Enter phone number" onChange={onPhoneChange} addonBefore={datePrefixSelector} style={{ width: '50%' }} />)}
                 </Form.Item>
+                    <Form.Item validateStatus={ageError ? 'error' : ''} help={ageError || ''}>
+                        {getFieldDecorator('age', {
+                            rules: [{ required: true, message: 'Please Enter age!', max: 2, min: 1 }],
+                        })(
+                            <Input type="number" style={{ width: 255 }} size="large" placeholder="Enter age" onChange={onAgeChange}  />
+                        )}
+                    </Form.Item>
                 <Form.Item validateStatus={genderError ? 'error' : ''} help={genderError || ''}>
                     {getFieldDecorator('gender', {
                         rules: [{ required: true, message: 'Please select Gender!' }],
                     })(
                         <Select
-                            style={{ width: 225 }}
+                            style={{ width: 255 }}
                             placeholder="Select gender"
                             onChange={onGenderChange}
                             size="large" 
                         >
-                            <Option value="male">Male</Option>
-                            <Option value="female">Female</Option>
-                            <Option value="other">Other</Option>
+                            <Option value="m">Male</Option>
+                            <Option value="f">Female</Option>
+                            <Option value="o">Other</Option>
                         </Select>
                     )}
                 </Form.Item>
@@ -204,12 +237,12 @@ const format = 'HH:mm';
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please select time!' }],
                     })(
-                        <TimePicker onChange={onTimeChange} size="large" format={format}  />
+                        <TimePicker onChange={onTimeChange} use12Hours size="large" format={format}  minuteStep={60} disabledHours={() => disabledHours} />
                     )}
                 </Form.Item>
 
                 <Form.Item>
-                    <Button onClick={showModal} type="primary" size="large"  htmlType="submit" disabled={hasErrors(getFieldsError())}>
+                    <Button onClick={isFormValid() && showModal} type="primary" size="large"  htmlType="submit" disabled={ !isFormValid() || hasErrors(getFieldsError())}>
                         Book Appointment
           </Button>
                 </Form.Item>
@@ -229,17 +262,17 @@ const format = 'HH:mm';
                         <div className="steps-content">{steps[currentStep].content}</div>
                         <div className="steps-action">
                     {currentStep < steps.length - 1 && (
-                        <Button type="primary" onClick={() => next()}>
+                        <Button type="primary" onClick={goForward}>
                         {currentStep === 0 ? 'Check OTP' : 'Next' }
                         </Button>
                     )}
                     {currentStep === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                        <Button type="primary" onClick={() => message.success('Booking done successfully !')}>
                         Done
                         </Button>
                     )}
                     {currentStep > 0 && (
-                        <Button style={{ marginLeft: 8 }} onClick={() => prev()}>
+                        <Button style={{ marginLeft: 8 }} onClick={goBackward}>
                         Previous
                         </Button>
                     )}
