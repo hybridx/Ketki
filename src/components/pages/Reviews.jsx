@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 
-const Reviews = ({}) => (
+const Reviews = () => (
     <div>
         <Header />
-            <div class="rc-container">
+            <div id="google-reviews"></div>
+            {/* <div class="rc-container">
             <div class="grid-1 reviewBox">
                 <div>
                     <p> Review 1</p>
@@ -76,9 +77,9 @@ const Reviews = ({}) => (
                 </div>
             </div>
             </div>
+        */}
         <Footer />
     </div>
 )
-
 
 export default Reviews;

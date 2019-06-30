@@ -1,22 +1,51 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo1.png';
-import facebook from '../assets/facebook.png';
-import twitter from '../assets/twitter.png';
-import instagram from '../assets/instagram.png';
+import { Menu, Dropdown, Icon } from 'antd';
+import facebook from '../assets/facebook.svg';
+import twitter from '../assets/twitter.svg';
+import instagram from '../assets/instagram.svg';
+import { userIsOnMobile }from '../utils';
 
-const Header = ({}) => (
-    <header class="header">
-            <NavLink to={'/'} ><img class="logo-image" src={logo} /></NavLink>
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li class="li-links"><NavLink to={'/reviews'} activeClassName="nav_active">Testimonials</NavLink></li>
+const menu = (
+    <Menu className="mobile-dropdown-menu">
+    <Menu.Item key="0">
+    <NavLink to={'/reviews'} activeClassName="nav_active">Testimonials</NavLink>
+    </Menu.Item>
+    <Menu.Item key="1">
+     <NavLink to={'/contact'} activeClassName="nav_active">Contact</NavLink>
+    </Menu.Item>
+    <Menu.Item key="3">
+    <img className="li-image" src={facebook} alt="facebook"/>
+    </Menu.Item>    
+    <Menu.Item key="4">
+        <img className="li-image" src={twitter} alt="twitter"/>
+    </Menu.Item>
+    <Menu.Item key="5">
+    <img className="li-image" src={instagram} alt="instagram"/>
+    </Menu.Item>
+  </Menu>
+);
+
+const Header = () => (
+    <header className="header">
+            <NavLink to={'/'} ><img className="logo-image" src={logo} alt="logo"/></NavLink>
+            <div className="nav">
+                {userIsOnMobile() ? 
+                 <Dropdown overlay={menu} trigger={['click']}>
+                 <a className="ant-dropdown-link mobile-dropdown-link" href="#">
+                   Menu <Icon type="down" />
+                 </a>
+               </Dropdown>   :    
+                <ul className="nav-list">
+                    <li className="li-links"><NavLink to={'/reviews'} activeClassName="nav_active">Testimonials</NavLink></li>
                     <li className="li-links"><NavLink to={'/contact'} activeClassName="nav_active">Contact</NavLink></li>
-                    <li><img class="li-image" src={facebook} /></li>
-                    <li><img class="li-image" src={twitter} /></li>
-                    <li><img class="li-image" src={instagram} /></li>
+                    <li><img className="li-image" src={facebook} alt="facebook"/></li>
+                    <li><img className="li-image" src={twitter} alt="twitter"/></li>
+                    <li><img className="li-image" src={instagram} alt="instagram"/></li>
                 </ul>
-            </nav>
+                    }
+            </div>
     </header>
 )
 

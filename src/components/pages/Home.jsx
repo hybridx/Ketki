@@ -1,10 +1,10 @@
-import React, { Component, useState } from 'react';
-import { Form, Icon, Steps, Input, message, InputNumber, Button, DatePicker, TimePicker, Select, Modal } from 'antd';
+import React, {  useState } from 'react';
+import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Modal, Row, Col, Icon } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
 import { getAvailableSlots, sendOTPToUser, booNewAppointment } from '../../api';
+import moment from 'moment';
 
 const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
-const DELAY = 1500;
 const { Option } = Select;
 const { Step } = Steps;
 const format = 'HH:mm';
@@ -22,6 +22,7 @@ const format = 'HH:mm';
         wrapperCol: {
             xs: { span: 24 },
             sm: { span: 16 },
+            md: { span: 24 },
         },
     };
     
@@ -37,10 +38,10 @@ const format = 'HH:mm';
         const [currentStep, setCurrentStep] = useState(0);
         const [OTP, setOTP] = useState('');
         const [captchaValue, setCaptchaValue] = useState();
-        const [expired, setExpired] = useState('false');
+        const [setExpired] = useState('false');
         const [ disabledHours, setDisabledHours ] = useState([]);
         const _reCaptchaRef = React.createRef();
-        
+    
         const userData = {
             otp: OTP,
             name: name,
@@ -58,10 +59,13 @@ const format = 'HH:mm';
         const genderError = isFieldTouched('gender') && getFieldError('gender');
         const ageError = isFieldTouched('age') && getFieldError('age');
         
-        const OtpJsx = (
+
+        let OtpJsx = (
             <React.Fragment>
             <div class="content-box">
-            <Input type="number" size="large" placeholder="Enter OTP" onChange={onOTPChange} style={{ width: '50%' }} required />
+            <Input type="number" size="large" placeholder="Enter OTP" onChange={onOTPChange} 
+            className={'inputClass'}
+            required />
             </div>
                 <div class="content-box">
                 <ReCAPTCHA
@@ -79,19 +83,6 @@ const format = 'HH:mm';
             <div class="content-box">
             <h2>Your appointment is now confirmed.</h2>
             <h3>Thank You</h3>
-            </div>
-        )
-
-
-        const CaptchaJsx = (
-            <div class="content-box">
-                <ReCAPTCHA
-                    style={{ display: "inline-block" }}
-                    theme="light"
-                    ref={_reCaptchaRef}
-                    sitekey={TEST_SITE_KEY}
-                    onChange={handleCaptchaChange}
-                />
             </div>
         )
 
@@ -155,7 +146,19 @@ const format = 'HH:mm';
         }
 
         function handleOk(e){
-            setShowModal(false);
+            if(OTP && captchaValue) {
+                message.success('Booking done successfully !');
+                setShowModal(false);
+                setName('');
+                setMobileNumber('');
+                setAgeNumber('');
+                setGender('');
+                setDate('');
+                setTime('');
+                setCurrentStep(0);
+            } else {
+                message.error('Please enter correct information !');
+            }
         };
 
         function handleCancel(e){
@@ -163,10 +166,19 @@ const format = 'HH:mm';
         };
 
         function goForward() {
-            if( currentStep === 0 ) {
+            if( currentStep === 0 && captchaValue && OTP) {
                 booNewAppointment(userData)
-                .then(data => captchaValue && data.book === 'OK'  && setCurrentStep(currentStep + 1));
+                    .then(data => data.status === 'OK'  && setCurrentStep(currentStep + 1));
+            } else if(!OTP) {
+                message.error('Please enter correct OTP!');
+                
+            } else if(!captchaValue) {
+                message.error('Please check captcha!');
             }
+        }
+        function disabledDate(current) {
+            console.log(current);
+            return current && current <= moment();
         }
         function goBackward() {
             setCurrentStep(currentStep - 1);
@@ -184,7 +196,9 @@ const format = 'HH:mm';
       );
       
       return (
-          <div class="container">
+          <React.Fragment>
+          <Row>
+              <Col sm={24} md={12}>
             <Form {...formItemLayout} onSubmit={bookAppointment} className="signUpForm">
                 <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
                     {getFieldDecorator('username', {
@@ -193,21 +207,23 @@ const format = 'HH:mm';
                         <Input
                             placeholder="Enter your full name .."
                             size="large" 
-                            style={{ width: '50%' }}
+                            className={'inputClass'}
                             onChange={onNameChange}
+                            value={name}
                         />,
                     )}
                 </Form.Item>
                 <Form.Item validateStatus={phoneError ? 'error' : ''} help={phoneError || ''}>
                     {getFieldDecorator('phone', {
-                        rules: [{ required: true, message: 'Please input your phone number!', len: 10 }],
-                        })(<Input type="number" size="large" placeholder="Enter phone number" onChange={onPhoneChange} addonBefore={datePrefixSelector} style={{ width: '50%' }} />)}
+                        rules: [{ required: true, message: 'Phone no. should be 10 digit!', min: 10, max: 10 }],
+                        })(<Input type="number" size="large" placeholder="Enter phone number" onChange={onPhoneChange} addonBefore={datePrefixSelector} 
+                        className={'inputClass'} value={mobileNumber} />)}
                 </Form.Item>
                     <Form.Item validateStatus={ageError ? 'error' : ''} help={ageError || ''}>
                         {getFieldDecorator('age', {
                             rules: [{ required: true, message: 'Please Enter age!', max: 2, min: 1 }],
                         })(
-                            <Input type="number" style={{ width: 255 }} size="large" placeholder="Enter age" onChange={onAgeChange}  />
+                            <Input type="number" className={'widthInputStyle'} size="large" placeholder="Enter age" onChange={onAgeChange} value={age} />
                         )}
                     </Form.Item>
                 <Form.Item validateStatus={genderError ? 'error' : ''} help={genderError || ''}>
@@ -215,10 +231,12 @@ const format = 'HH:mm';
                         rules: [{ required: true, message: 'Please select Gender!' }],
                     })(
                         <Select
-                            style={{ width: 255 }}
+                            classNam
+                            className={'widthInputStyle'}
                             placeholder="Select gender"
                             onChange={onGenderChange}
                             size="large" 
+                            value={gender}
                         >
                             <Option value="m">Male</Option>
                             <Option value="f">Female</Option>
@@ -230,14 +248,21 @@ const format = 'HH:mm';
                     {getFieldDecorator('date', {
                         rules: [{ required: true, message: 'Please select date!' }],
                     })(
-                        <DatePicker onChange={onDateChange} size="large" />
+                        <DatePicker
+                         onChange={onDateChange}
+                        size="large"
+                        className={'widthInputStyle'}
+                        disabledDate={disabledDate}
+                        value={date}
+                        // disabledDate={d => !d || d.isBefore(15)}
+                        />
                     )}
                 </Form.Item>
                 <Form.Item validateStatus={timeError ? 'error' : ''} help={timeError || ''}>
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please select time!' }],
                     })(
-                        <TimePicker onChange={onTimeChange} use12Hours size="large" format={format}  minuteStep={60} disabledHours={() => disabledHours} />
+                        <TimePicker onChange={onTimeChange} use12Hours size="large" format={format}  minuteStep={60} disabledHours={() => disabledHours} value={time} />
                     )}
                 </Form.Item>
 
@@ -247,6 +272,8 @@ const format = 'HH:mm';
           </Button>
                 </Form.Item>
             </Form>
+            </Col>
+            </Row>
                 <Modal
                     width={700}
                     title="Confirmation"
@@ -256,7 +283,7 @@ const format = 'HH:mm';
                     >
                     <Steps current={currentStep}>
                         {steps.map(item => (
-                            <Step key={item.title} title={item.title} />
+                            <Step key={item.title} title={item.title} icon={currentStep === 0 && <Icon type="loading" />}/>
                         ))}
                     </Steps>
                         <div className="steps-content">{steps[currentStep].content}</div>
@@ -271,14 +298,14 @@ const format = 'HH:mm';
                         Done
                         </Button>
                     )}
-                    {currentStep > 0 && (
+                    {currentStep > 2 && (
                         <Button style={{ marginLeft: 8 }} onClick={goBackward}>
                         Previous
                         </Button>
                     )}
                     </div>
                     </Modal>
-        </div>
+        </React.Fragment>
     )
 }
 
