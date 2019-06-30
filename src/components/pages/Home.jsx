@@ -7,12 +7,14 @@ import moment from 'moment';
 const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const { Option } = Select;
 const { Step } = Steps;
-const format = 'HH:mm';
+const format = 'HH';
 
 
     function hasErrors(fieldsError) {
         return Object.keys(fieldsError).some(field => fieldsError[field]);
     }
+
+    const handleClose = () => (true);
 
     const formItemLayout = {
         labelCol: {
@@ -81,14 +83,15 @@ const format = 'HH:mm';
 
         const doneJsx = (
             <div class="content-box">
-            <h2>Your appointment is now confirmed.</h2>
+            <h2>Hello {name}! your appointment is now confirmed.</h2>
+            <h3>Date: {date} time: {time}</h3>
             <h3>Thank You</h3>
             </div>
         )
 
         const steps = [
             {
-              title: 'Enter Otp',
+              title: 'Enter OTP',
               content: OtpJsx,
             },
             {
@@ -168,9 +171,16 @@ const format = 'HH:mm';
         function goForward() {
             if( currentStep === 0 && captchaValue && OTP) {
                 booNewAppointment(userData)
-                    .then(data => data.status === 'OK'  && setCurrentStep(currentStep + 1));
+                    .then(data => {
+                        if (data.status === 'OK') {
+                            setCurrentStep(currentStep + 1);
+                        } else {
+                        message.error('Please enter correct OTP!');
+                        }
+
+                    });
             } else if(!OTP) {
-                message.error('Please enter correct OTP!');
+                message.error('Please enter OTP!');
                 
             } else if(!captchaValue) {
                 message.error('Please check captcha!');
@@ -262,7 +272,8 @@ const format = 'HH:mm';
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please select time!' }],
                     })(
-                        <TimePicker onChange={onTimeChange} use12Hours size="large" format={format}  minuteStep={60} disabledHours={() => disabledHours} value={time} />
+                        <TimePicker onChange={onTimeChange} use12Hours size="large" format={format} disabledHours={() => disabledHours} value={time}
+                     />
                     )}
                 </Form.Item>
 
