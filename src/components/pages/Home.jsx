@@ -8,6 +8,8 @@ const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const { Option } = Select;
 const { Step } = Steps;
 const format = 'HH';
+const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").add(14,"days");
+
 
 
     function hasErrors(fieldsError) {
@@ -188,7 +190,7 @@ const format = 'HH';
         }
         function disabledDate(current) {
             console.log(current);
-            return current && current <= moment();
+            return current && current < moment;
         }
         function goBackward() {
             setCurrentStep(currentStep - 1);
