@@ -5,16 +5,20 @@ html {
     color: #fff;
     background: #fbfbfb;
     font-family: Montserrat, sans-serif;
-    background-image: url(assets/doctor.png);
-    background-size: cover
 }
 
 .header .logo-image {
     margin-left: 20px;
+    position: relative;
+    top: 30px;
+    width: 135px;
+    border: 1px solid orange;
 }
-.app {
-    height: 100%;
-    width: 100%
+.App {
+    height: 100vh;
+    width: 100%;
+    background-image: url(assets/doctor.png);
+    background-size: cover;
 }
 
 a {
@@ -94,7 +98,7 @@ li:hover {
 
 .signUpForm {
     margin: 0 5rem !important;
-    padding-top: 5rem !important
+    padding-top: 8rem !important
 }
 
 .contact-container {
@@ -124,6 +128,10 @@ li:hover {
     background: rgba(181, 118, 94, .63)
 }
 
+input {
+    /* padding: 30px 0 !important;
+    line-height: 40px !important; */
+} 
 .grid-3 .grid-6 .grid-9 .grid-12,
 .reviewBox div {
     -webkit-transition: -webkit-transform .2s;
@@ -132,11 +140,14 @@ li:hover {
     transition: transform .2s, -webkit-transform .2s
 }
 
-.grid-3 .grid-6 .grid-9 .grid-12 {
-    -webkit-transform-origin: left;
-    transform-origin: left
+.contactFormLeftPane, .contactFormRightPane {
+    padding: 0 50px !important;
 }
 
+.contactFormRightPane {
+    position: relative;
+    bottom: -180px
+}
 .reviewBox div:hover {
     -webkit-transform: scale(1.8);
     transform: scale(1.8)
@@ -147,14 +158,18 @@ input.widthInputStyle {
     width: 255px
 }
 
+.contact-left-pane {
+    padding-top: 35px;
+}
 .embed-google-map {
     width: 400px;
-    height: 430px;
+    height: 230px;
 }
 
 .rc-container-contact {
     height: calc(100vh - 10.6rem) !important;
     padding: 2rem 3rem;
+    margin: 0 !important;
 }
 
 @media screen and (max-width:60em) {
@@ -180,7 +195,7 @@ input.widthInputStyle {
 
     .signUpForm {
         margin: 0 2rem !important;
-        padding-top: 2rem !important
+        padding-top: 4rem !important
     }
 
     .footer {
@@ -193,13 +208,21 @@ input.widthInputStyle {
 
     .rc-container-contact {
         height: auto !important;
-        padding: 2rem 1rem !important
+        padding: 2rem 1rem !important;
+        margin: 0 !important;
     }
 
     .embed-google-map {
         height: inherit;
-        width: inherit
+        width: 200px;
     }
+    .contactFormLeftPane, .contactFormRightPane{
+        padding: 10px 10px !important;
+    }
+    .contactFormRightPane {
+        position: static;
+        bottom: 0;
+    } 
 }
 
 .nav_active {

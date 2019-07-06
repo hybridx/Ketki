@@ -8,16 +8,11 @@ const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const { Option } = Select;
 const { Step } = Steps;
 const format = 'HH';
-const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").add(14,"days");
 
-
-
-    function hasErrors(fieldsError) {
+function hasErrors(fieldsError) {
         return Object.keys(fieldsError).some(field => fieldsError[field]);
     }
-
-    const handleClose = () => (true);
-
+        
     const formItemLayout = {
         labelCol: {
             xs: { span: 24 },
@@ -45,7 +40,7 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
         const [setExpired] = useState('false');
         const [ disabledHours, setDisabledHours ] = useState([]);
         const _reCaptchaRef = React.createRef();
-    
+        
         const userData = {
             otp: OTP,
             name: name,
@@ -62,7 +57,6 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
         const phoneError = isFieldTouched('phone') && getFieldError('phone');
         const genderError = isFieldTouched('gender') && getFieldError('gender');
         const ageError = isFieldTouched('age') && getFieldError('age');
-        
 
         let OtpJsx = (
             <React.Fragment>
@@ -109,6 +103,10 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
         if (value === null) setExpired({ expired: "true" });
         };
 
+        function handleReset(){
+            form.resetFields();
+          };
+
         function bookAppointment(e){
             e.preventDefault();
             sendOTPToUser(userData)
@@ -128,7 +126,6 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
         }
         
         function onTimeChange(timeObj, timeString){
-            // setTime(timeString);
             setTime(timeString.substr(0,2));
         }
         
@@ -188,10 +185,6 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
                 message.error('Please check captcha!');
             }
         }
-        function disabledDate(current) {
-            console.log(current);
-            return current && current < moment;
-        }
         function goBackward() {
             setCurrentStep(currentStep - 1);
           }
@@ -212,6 +205,8 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
           <Row>
               <Col sm={24} md={12}>
             <Form {...formItemLayout} onSubmit={bookAppointment} className="signUpForm">
+                <Row>
+                    <Col md={24}>
                 <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please input your username!' }],
@@ -225,19 +220,18 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
                         />,
                     )}
                 </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={16}>
+                <Col md={12}>
                 <Form.Item validateStatus={phoneError ? 'error' : ''} help={phoneError || ''}>
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Phone no. should be 10 digit!', min: 10, max: 10 }],
                         })(<Input type="number" size="large" placeholder="Enter phone number" onChange={onPhoneChange} addonBefore={datePrefixSelector} 
                         className={'inputClass'} value={mobileNumber} />)}
                 </Form.Item>
-                    <Form.Item validateStatus={ageError ? 'error' : ''} help={ageError || ''}>
-                        {getFieldDecorator('age', {
-                            rules: [{ required: true, message: 'Please Enter age!', max: 2, min: 1 }],
-                        })(
-                            <Input type="number" className={'widthInputStyle'} size="large" placeholder="Enter age" onChange={onAgeChange} value={age} />
-                        )}
-                    </Form.Item>
+                </Col>
+                <Col md={8} >
                 <Form.Item validateStatus={genderError ? 'error' : ''} help={genderError || ''}>
                     {getFieldDecorator('gender', {
                         rules: [{ required: true, message: 'Please select Gender!' }],
@@ -245,10 +239,11 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
                         <Select
                             classNam
                             className={'widthInputStyle'}
-                            placeholder="Select gender"
+                            placeholder="Gender"
                             onChange={onGenderChange}
                             size="large" 
                             value={gender}
+                            style={{ width: '100%'}}
                         >
                             <Option value="m">Male</Option>
                             <Option value="f">Female</Option>
@@ -256,6 +251,19 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
                         </Select>
                     )}
                 </Form.Item>
+                </Col>
+                <Col md={4}>
+                    <Form.Item validateStatus={ageError ? 'error' : ''} help={ageError || ''}>
+                        {getFieldDecorator('age', {
+                            rules: [{ required: true, message: 'Please Enter age!', max: 2, min: 1 }],
+                        })(
+                            <Input type="number" className={'widthInputStyle'} size="large" placeholder="Age" onChange={onAgeChange} value={age} style={{ width: '100%'}}/>
+                        )}
+                    </Form.Item>
+                    </Col>
+                    </Row>
+                <Row gutter={16}>
+                    <Col md={12}>
                 <Form.Item validateStatus={dateError ? 'error' : ''} help={dateError || ''}>
                     {getFieldDecorator('date', {
                         rules: [{ required: true, message: 'Please select date!' }],
@@ -264,26 +272,42 @@ const endDate  = moment().date(1).add((moment().date() > 14 ? 1 : 0), "months").
                          onChange={onDateChange}
                         size="large"
                         className={'widthInputStyle'}
-                        disabledDate={disabledDate}
+                        disabledDate={(current) => (
+                            current && current > moment(new Date()).add(15, 'd') || current.valueOf() < moment().subtract(1, 'd')
+                          )}
                         value={date}
+                        style={{ width: '100%'}}
                         // disabledDate={d => !d || d.isBefore(15)}
                         />
                     )}
                 </Form.Item>
+                    </Col>
+                    <Col md={12}>
                 <Form.Item validateStatus={timeError ? 'error' : ''} help={timeError || ''}>
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please select time!' }],
                     })(
-                        <TimePicker onChange={onTimeChange} use12Hours size="large" format={format} disabledHours={() => disabledHours} value={time}
+                        <TimePicker onChange={onTimeChange} size="large" format={format} style={{ width: '100%'}} disabledHours={() => disabledHours} value={time}
                      />
                     )}
                 </Form.Item>
-
+                </Col></Row>
+                <Row gutter={16}>
+                    <Col md={12}>
+                    <Form.Item>
+                    <Button onClick={handleReset} type="normal" size="large"  htmlType="submit" style={{ width: '100%'}}>
+                        RESET
+                      </Button>
+                        </Form.Item>
+            </Col>
+            <Col md={12}>
                 <Form.Item>
-                    <Button onClick={isFormValid() && showModal} type="primary" size="large"  htmlType="submit" disabled={ !isFormValid() || hasErrors(getFieldsError())}>
+                    <Button onClick={isFormValid() && showModal} type="primary" size="large"  htmlType="submit" style={{ width: '100%'}} disabled={hasErrors(getFieldsError())}>
                         Book Appointment
           </Button>
                 </Form.Item>
+                </Col>
+                </Row>
             </Form>
             </Col>
             </Row>

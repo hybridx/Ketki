@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/logo1.png';
+import logo from '../assets/logo1.jpg';
 import { Menu, Dropdown, Icon } from 'antd';
 import facebook from '../assets/facebook.svg';
 import twitter from '../assets/twitter.svg';
@@ -27,6 +27,7 @@ const menu = (
   </Menu>
 );
 
+console.log('user', userIsOnMobile());
 const Header = () => (
     <header className="header">
             <NavLink to={'/'} ><img className="logo-image" src={logo} alt="logo"/></NavLink>
