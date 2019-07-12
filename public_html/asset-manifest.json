@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b213582a.chunk.css",
+    "main.js": "/static/js/main.e71fdf10.chunk.js",
+    "main.js.map": "/static/js/main.e71fdf10.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.0cdb9ae6.chunk.css": "/static/css/2.0cdb9ae6.chunk.css",
+    "static/js/2.3ceb8dfe.chunk.js": "/static/js/2.3ceb8dfe.chunk.js",
+    "static/js/2.3ceb8dfe.chunk.js.map": "/static/js/2.3ceb8dfe.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.f754f90be93c07771c13fa81ea205eff.js": "/precache-manifest.f754f90be93c07771c13fa81ea205eff.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.0cdb9ae6.chunk.css.map": "/static/css/2.0cdb9ae6.chunk.css.map",
+    "static/css/main.b213582a.chunk.css.map": "/static/css/main.b213582a.chunk.css.map",
+    "static/media/cybzilla-logo.png": "/static/media/cybzilla-logo.d8431a09.png",
+    "static/media/App.css": "/static/media/doctor.089baadd.png",
+    "static/media/facebook.svg": "/static/media/facebook.c509a4c4.svg",
+    "static/media/instagram.svg": "/static/media/instagram.160b0c99.svg",
+    "static/media/twitter.svg": "/static/media/twitter.a57ea219.svg"
+  }
+}
