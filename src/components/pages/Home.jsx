@@ -202,7 +202,7 @@ function hasErrors(fieldsError) {
       
       return (
           <React.Fragment>
-          <Row>
+          <Row className="home">
               <Col sm={24} md={12}>
             <Form {...formItemLayout} onSubmit={bookAppointment} className="signUpForm">
                 <Row>
@@ -302,7 +302,7 @@ function hasErrors(fieldsError) {
             </Col>
             <Col md={12}>
                 <Form.Item>
-                    <Button onClick={isFormValid() && showModal} type="primary" size="large"  htmlType="submit" style={{ width: '100%'}} disabled={hasErrors(getFieldsError())}>
+                    <Button onClick={isFormValid() && showModal} type="primary" size="large"  htmlType="submit" style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError())}>
                         Book Appointment
           </Button>
                 </Form.Item>

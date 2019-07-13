@@ -53,3 +53,19 @@ export const booNewAppointment = ({name, age, date, phone, time, gender, otp}) =
     .then(data => data)
     .catch(err => err)
 }
+
+export const sendMessage = (name, email, message) => {
+    let data = new FormData();
+    
+    data.append('name', name);
+    data.append('email', email);
+    data.append('message', message);
+
+    return fetch(`${API_URL}contactUs`, {
+        method: 'POST',
+        body: data,
+    })
+    .then(response => response.json())
+    .then(data => data)
+    .catch(err => err)
+}

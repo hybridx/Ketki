@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Row, Col, Switch, Form, Input, Button } from 'antd';
 import Header from '../Header';
 import Footer from '../Footer';
+import { sendMessage } from '../../api';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -53,6 +54,12 @@ const WrappedContactForm = ({form}) => {
 
     function isFormValid() {
         return name && email && messege;
+    }
+
+    function sendDoctorMessage() {
+        sendMessage(name, email, messege)
+            .then(data => data.json())
+            .then(data => data.status === 'OK')
     }
     return (<div>
         <Header />
@@ -108,7 +115,7 @@ const WrappedContactForm = ({form}) => {
                     </Form.Item>
                     </Col>
                 <Form.Item>
-                    <Button onClick={isFormValid()} type="primary" size="large"  htmlType="submit" disabled={hasErrors(getFieldsError())}>
+                    <Button onClick={isFormValid && sendDoctorMessage} type="primary" size="large"  htmlType="submit"  style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError())}>
                         Send
           </Button>
                 </Form.Item>
