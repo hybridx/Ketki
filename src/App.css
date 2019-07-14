@@ -3,7 +3,7 @@ html {
     margin: 0;
     padding: 0;
     color: #fff;
-    background: #fbfbfb;
+    background: white;
     font-family: Montserrat, sans-serif;
 }
 
@@ -62,22 +62,26 @@ a {
 .reviews {
     margin-top: 4rem;
     padding: 0 1rem;
+    color: #707070;
 }
 
 .footer {
     height: 4.6rem;
     box-shadow: 12px 7px 14px 2px #06060652;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     color: white;
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     clear: both;
-    position: relative;
+    /* position: relative; */
+    position: fixed;
+    bottom: 0;
     margin-top: 16px;
     width: 100%;
     background-color: #60b718;
+    padding: 2rem;
 }
 
 .nav {
@@ -181,8 +185,8 @@ input.widthInputStyle {
     padding-top: 35px;
 }
 .embed-google-map {
-    width: 400px;
-    height: 230px;
+    width: 490px;
+    height: 430px;
 }
 
 .rc-container-contact {
@@ -235,7 +239,7 @@ input.widthInputStyle {
 
     .embed-google-map {
         height: inherit;
-        width: 200px;
+        width: 100%;
     }
     .contactFormLeftPane, .contactFormRightPane{
         padding: 10px 10px !important;
@@ -276,7 +280,7 @@ ul.mobile-dropdown-menu.li>a {
     flex-wrap: wrap;
     font-family: arial;
     font-size: 12px;
-    height: calc(100vh - 10.6rem)
+    /* height: calc(100vh - 10.6rem) */
 }
 
 .review-item {

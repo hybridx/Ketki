@@ -82,6 +82,10 @@ const WrappedContactForm = ({form}) => {
         <Row  gutter={16} className="rc-container-contact">
         <Col md={12} sm={24}  className="contact-left-pane">
                 <p class="primary-text"> Contact</p>
+                <Title level={2} style={{ color: '#007FFF'}}>Dr. Shivshankar B. Biradar </Title>
+                <p level={4} style={{ color: '#007FFF'}}>Ano-Rectal Consultant </p>
+                <p level={4} style={{ color: '#007FFF'}}> B.A.M.S. MUHS (Nashik),</p>
+                <p level={4} style={{ color: '#007FFF'}}> Reg No. I-49369-A,,</p>
                 <Title level={2} style={{ color: '#007FFF'}}>Clinic Address </Title>
                 <p level={4} style={{ color: '#007FFF'}}>Flat # 21, 2nd Floor Tulsi Appartment,</p>
                 <p level={4} style={{ color: '#007FFF'}}> Above kalyan janta Sahkari bank,</p>

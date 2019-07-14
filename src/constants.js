@@ -1,2 +1,3 @@
 export const API_URL = 'https://pilesinjection.in/';
 export const emailRegex =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJBSjsVgTCwjsR1F66Dnfw7CQ&fields=name,rating,formatted_phone_number,review&key=AIzaSyAi4QTwlFj4e1pdFYM_l8V_aaVVBVMtTtY'
