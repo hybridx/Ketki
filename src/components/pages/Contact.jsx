@@ -42,11 +42,11 @@ const WrappedContactForm = ({form}) => {
     }
 
     function onEmailChange(e) {
-        setName(e.target.value);
+        setEmail(e.target.value);
     }
 
     function onNameChange(e) {
-        setEmail(e.target.value);
+        setName(e.target.value);
     }
 
     function onMessegeChange(e) {
@@ -70,6 +70,7 @@ const WrappedContactForm = ({form}) => {
             .then(data => { 
                 if (data.status === 'OK') {
                     setVisible(true);
+                    form.resetFields();
                 }
                 else {
                     setVisible(false);

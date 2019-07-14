@@ -1,10 +1,14 @@
 import { API_URL } from './constants';
 
-export const getAvailableSlots = (date, phone) => {
+export const getAvailableSlots = ({name, age, date, phone, time, gender, otp}) => {
     let data = new FormData();
-    
+    data.append('name', name);
     data.append('date', date);
     data.append('phone', phone);
+    data.append('age', parseInt(age));
+    data.append('time', time);
+    data.append('gender', gender);
+    data.append('otp', parseInt(otp));
 
     return fetch(`${API_URL}availableSlots`, {
         method: 'POST',

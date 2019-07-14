@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useState, useEffect } from 'react';
 import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Modal, Row, Col, Icon } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
 import { getAvailableSlots, sendOTPToUser, booNewAppointment } from '../../api';
@@ -92,15 +92,21 @@ function hasErrors(fieldsError) {
         )
 
         const steps = [
-            {
-              title: 'Enter OTP',
-              content: OtpJsx,
-            },
+            // {
+            //   title: 'Enter OTP',
+            //   content: OtpJsx,
+            // },
             {
                 title: 'Done',
                 content: doneJsx,
               },
           ];
+
+
+          useEffect(()=> {
+            getAvailableSlots(userData)
+            .then(data => { setDisabledHours(data.bookedSlots) })
+          }, [date]);
 
         function handleCaptchaChange(value){
         console.log("Captcha value:", value);
@@ -115,9 +121,24 @@ function hasErrors(fieldsError) {
 
         function bookAppointment(e){
             e.preventDefault();
-            sendOTPToUser(userData)
-                .then(data => console.log(data));
-            console.log(name, mobileNumber, gender, date, time, disabledHours, OTP);
+            // sendOTPToUser(userData)
+            //     .then(data => console.log(data));
+            // console.log(name, mobileNumber, gender, date, time, disabledHours, OTP);
+            if(isFormValid()) {
+                booNewAppointment(userData)
+                        .then(data => {
+                            if (data.status === 'OK') {
+                            setShowModal(true);
+                            form.resetFields();
+                            } else {
+                            message.error('Something went wrong, Please try again!');
+                            }
+    
+                        });
+            }
+             else {
+                 message.error('Something went wrong!')
+             }
         }
         
         function onPhoneChange(e){
@@ -137,8 +158,6 @@ function hasErrors(fieldsError) {
         
         function onDateChange(dateObj, dateString){
             setDate(dateString);
-            getAvailableSlots(userData)
-                .then(data => { setDisabledHours(data.bookedSlots) })
         }
     
         function onGenderChange(selectedGender){
@@ -149,13 +168,25 @@ function hasErrors(fieldsError) {
             setOTP(e.target.value);
         }
 
-        function showModal(params) {
-            setShowModal(true);
-        }
+        // function showModal(params) {
+        //     setShowModal(true);
+        // }
 
         function handleOk(e){
-            if(OTP && captchaValue) {
-                message.success('Booking done successfully !');
+            // if(OTP && captchaValue) {
+            //     message.success('Booking done successfully !');
+            //     setShowModal(false);
+            //     setName('');
+            //     setMobileNumber('');
+            //     setAgeNumber('');
+            //     setGender('');
+            //     setDate('');
+            //     setTime('');
+            //     setCurrentStep(0);
+            // } else {
+            //     message.error('Please enter correct information !');
+            // }
+            message.success('Booking done successfully !');
                 setShowModal(false);
                 setName('');
                 setMobileNumber('');
@@ -164,9 +195,6 @@ function hasErrors(fieldsError) {
                 setDate('');
                 setTime('');
                 setCurrentStep(0);
-            } else {
-                message.error('Please enter correct information !');
-            }
         };
 
         function handleCancel(e){
@@ -174,20 +202,19 @@ function hasErrors(fieldsError) {
         };
 
         function goForward() {
-            if( currentStep === 0 && captchaValue && OTP) {
+            if( currentStep === 0 && captchaValue) {
                 booNewAppointment(userData)
                     .then(data => {
                         if (data.status === 'OK') {
-                            setCurrentStep(currentStep + 1);
+                            setShowModal(true);
+            form.resetFields();
                         } else {
-                        message.error('Please enter correct OTP!');
+                        message.error('Something went wrong, Please try again!');
                         }
 
-                    });
-            } else if(!OTP) {
-                message.error('Please enter OTP!');
-                
-            } else if(!captchaValue) {
+                    }); 
+            }
+             else if(!captchaValue) {
                 message.error('Please check captcha!');
             }
         }
@@ -284,7 +311,6 @@ function hasErrors(fieldsError) {
                           )}
                         value={date}
                         style={{ width: '100%'}}
-                        // disabledDate={d => !d || d.isBefore(15)}
                         />
                     )}
                 </Form.Item>
@@ -294,7 +320,7 @@ function hasErrors(fieldsError) {
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please select time!' }],
                     })(
-                        <TimePicker onChange={onTimeChange} size="large" format={format} style={{ width: '100%'}} disabledHours={() => disabledHours} value={time}
+                        <TimePicker onChange={onTimeChange} size="large" format={format} style={{ width: '100%'}} disabledHours={() => disabledHours} value={time} disabled={!date}
                      />
                     )}
                 </Form.Item>
@@ -309,7 +335,7 @@ function hasErrors(fieldsError) {
             </Col>
             <Col md={12} sm={6}>
                 <Form.Item>
-                    <Button onClick={isFormValid() && showModal} type="primary" size="large"  htmlType="submit" style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError())}>
+                    <Button onClick={isFormValid() && !hasErrors(getFieldsError())} type="primary" size="large"  htmlType="submit" style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError())}>
                         Book Appointment
           </Button>
                 </Form.Item>
@@ -326,9 +352,9 @@ function hasErrors(fieldsError) {
                     onCancel={handleCancel}
                     >
                     <Steps current={currentStep}>
-                        {steps.map(item => (
+                        {/* {steps.map(item => (
                             <Step key={item.title} title={item.title} icon={currentStep === 0 && <Icon type="loading" />}/>
-                        ))}
+                        ))} */}
                     </Steps>
                         <div className="steps-content">{steps[currentStep].content}</div>
                         <div className="steps-action">
@@ -338,7 +364,7 @@ function hasErrors(fieldsError) {
                         </Button>
                     )}
                     {currentStep === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Booking done successfully !')}>
+                        <Button style={{ border: 0, backgroundColor: '#60b718'}} type="primary" onClick={() => message.success('Booking done successfully !')}>
                         Done
                         </Button>
                     )}
