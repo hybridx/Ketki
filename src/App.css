@@ -20,6 +20,11 @@ html {
     width: 100%;
 }
 
+.primary-text {
+    color: #60b718;
+    font-weight: 900;
+    font-size: 1.3rem;    
+}
 .home {
     background-image: url(assets/doctor.png);
     background-size: cover;
@@ -54,19 +59,25 @@ a {
     overflow-y: overlay
 }
 
+.reviews {
+    margin-top: 4rem;
+    padding: 0 1rem;
+}
+
 .footer {
     height: 4.6rem;
     box-shadow: 12px 7px 14px 2px #06060652;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    color: #1890ff;
+    color: white;
     font-weight: 900;
     font-size: 1.5rem;
     clear: both;
     position: relative;
     margin-top: 16px;
-    width: 100%
+    width: 100%;
+    background-color: #60b718;
 }
 
 .nav {
@@ -207,7 +218,9 @@ input.widthInputStyle {
     }
 
     .footer {
-        font-size: 1rem
+        font-size: 1rem;
+        background-color: #60b718;
+        color: white;
     }
 
     #google-reviews {
@@ -231,6 +244,10 @@ input.widthInputStyle {
         position: static;
         bottom: 0;
     } 
+    .home {
+    background-image: none;
+
+    }
 }
 
 .nav_active {
@@ -244,8 +261,9 @@ input.widthInputStyle {
 }
 
 ul.mobile-dropdown-menu {
-    background: #98a8aa;
-    text-align: center
+    background: white;
+    border: 2px solid #60b718;
+    text-align: center;
 }
 
 ul.mobile-dropdown-menu.li>a {

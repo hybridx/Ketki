@@ -3,6 +3,8 @@ import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Mo
 import ReCAPTCHA from "react-google-recaptcha";
 import { getAvailableSlots, sendOTPToUser, booNewAppointment } from '../../api';
 import moment from 'moment';
+import { userIsOnMobile } from '../../utils';
+import doctor from '../../assets/doctor.png';
 
 const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const { Option } = Select;
@@ -79,8 +81,12 @@ function hasErrors(fieldsError) {
 
         const doneJsx = (
             <div class="content-box">
-            <h2>Hello {name}! your appointment is now confirmed.</h2>
+            <h2>Hello, </h2>
+            <h2> {name}! </h2>
+            <br />
+            <h2> your appointment is now confirmed.</h2>
             <h3>Date: {date} time: {time}</h3>
+            <br />            
             <h3>Thank You</h3>
             </div>
         )
@@ -203,6 +209,7 @@ function hasErrors(fieldsError) {
       return (
           <React.Fragment>
           <Row className="home">
+                {userIsOnMobile() && <img src={doctor} alt="doctor" width="100%" />}
               <Col sm={24} md={12}>
             <Form {...formItemLayout} onSubmit={bookAppointment} className="signUpForm">
                 <Row>
@@ -293,14 +300,14 @@ function hasErrors(fieldsError) {
                 </Form.Item>
                 </Col></Row>
                 <Row gutter={16}>
-                    <Col md={12}>
+                    <Col md={12} sm={6}>
                     <Form.Item>
                     <Button onClick={handleReset} type="normal" size="large"  htmlType="submit" style={{ width: '100%'}}>
                         RESET
                       </Button>
                         </Form.Item>
             </Col>
-            <Col md={12}>
+            <Col md={12} sm={6}>
                 <Form.Item>
                     <Button onClick={isFormValid() && showModal} type="primary" size="large"  htmlType="submit" style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError())}>
                         Book Appointment

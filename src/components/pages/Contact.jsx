@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Row, Col, Switch, Form, Input, Button } from 'antd';
+import { Typography, Row, Col, Switch, Form, Input, Button, Modal } from 'antd';
 import Header from '../Header';
 import Footer from '../Footer';
 import { sendMessage } from '../../api';
@@ -30,6 +30,7 @@ const WrappedContactForm = ({form}) => {
     const [name, setName ] = useState('');
     const [email, setEmail ] = useState('');
     const [messege, setMessege ] = useState('');
+    const [ visible, setVisible ] = useState(false);
 
     // Only show error after a field is touched.
     const usernameError = isFieldTouched('username') && getFieldError('username');
@@ -56,15 +57,30 @@ const WrappedContactForm = ({form}) => {
         return name && email && messege;
     }
 
+
+  function handleOk(e){
+    setVisible(false);
+  };
+
+  function handleCancel(e) {
+    setVisible(false);
+  };
     function sendDoctorMessage() {
         sendMessage(name, email, messege)
-            .then(data => data.json())
-            .then(data => data.status === 'OK')
+            .then(data => { 
+                if (data.status === 'OK') {
+                    setVisible(true);
+                }
+                else {
+                    setVisible(false);
+                }
+            })
     }
     return (<div>
         <Header />
         <Row  gutter={16} className="rc-container-contact">
         <Col md={12} sm={24}  className="contact-left-pane">
+                <p class="primary-text"> Contact</p>
                 <Title level={2} style={{ color: '#007FFF'}}>Clinic Address </Title>
                 <p level={4} style={{ color: '#007FFF'}}>Flat # 21, 2nd Floor Tulsi Appartment,</p>
                 <p level={4} style={{ color: '#007FFF'}}> Above kalyan janta Sahkari bank,</p>
@@ -100,8 +116,14 @@ const WrappedContactForm = ({form}) => {
             <Col md={12} sm={12}>
                 <Form.Item validateStatus={emailError ? 'error' : ''} help={emailError || ''}>
                     {getFieldDecorator('email', {
-                        rules: [{ required: true, message: 'Please enter valid mail ID!' }],
-                        })(<Input  size="large" placeholder="Enter Email ID" onChange={onEmailChange} 
+                        rules: [
+                            { required: true, message: 'Please enter valid mail ID!' },
+                            {
+                                type: 'email',
+                                message: 'The input is not valid E-mail!',
+                            }
+                        ],
+                        })(<Input  size="large" type="email" placeholder="Enter Email ID" onChange={onEmailChange} 
                         className={'inputClass'} value={email} />)}
                 </Form.Item>
                 </Col>
@@ -114,11 +136,13 @@ const WrappedContactForm = ({form}) => {
                         )}
                     </Form.Item>
                     </Col>
+                    <Col md={24} sm={6}>
                 <Form.Item>
                     <Button onClick={isFormValid && sendDoctorMessage} type="primary" size="large"  htmlType="submit"  style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError())}>
                         Send
           </Button>
                 </Form.Item>
+                    </Col>
                 <Col md={24} sm={24} style={{ height: '100%' }}>
                     <iframe title="gmap-ketki-clinic" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.65555865655!2d73.9418979950822!3d18.49925479384525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c20456ec2805%3A0x24ecf0770eba5ed4!2sKetki+Piles+Injection+Clinic!5e0!3m2!1sen!2sin!4v1561900992959!5m2!1sen!2sin" frameborder="0" style={{ border: 0 }} className={'embed-google-map'} allowfullscreen></iframe>
                 </Col> 
@@ -133,6 +157,14 @@ const WrappedContactForm = ({form}) => {
             <Footer />
         </Col> 
         </Row>
+        <Modal
+          title="Message"
+          visible={visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+            Message Sent Successfully !
+        </Modal>
     </div>)
 }
 

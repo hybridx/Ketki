@@ -35,7 +35,7 @@ const Header = () => (
                 {userIsOnMobile() ? 
                  <Dropdown overlay={menu} trigger={['click']}>
                  <a className="ant-dropdown-link mobile-dropdown-link" href="#">
-                   Menu <Icon type="down" />
+                   <Icon type="align-right" />
                  </a>
                </Dropdown>   :    
                 <ul className="nav-list">
