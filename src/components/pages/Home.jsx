@@ -1,7 +1,7 @@
 import React, {  useState, useEffect } from 'react';
 import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Modal, Row, Col, Icon } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
-import { getAvailableSlots, sendOTPToUser, booNewAppointment } from '../../api';
+import { getAvailableSlots, booNewAppointment } from '../../api';
 import moment from 'moment';
 import { userIsOnMobile } from '../../utils';
 import doctor from '../../assets/doctor.png';
@@ -109,7 +109,7 @@ function hasErrors(fieldsError) {
           }, [date]);
 
         function handleCaptchaChange(value){
-        console.log("Captcha value:", value);
+        // console.log("Captcha value:", value);
         setCaptchaValue(value);
         // if value is null recaptcha expired
         if (value === null) setExpired({ expired: "true" });

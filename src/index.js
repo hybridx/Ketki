@@ -10,9 +10,9 @@ import 'antd/dist/antd.css';
 
 ReactDOM.render(<Router>
     <Switch>
-        <Route exact path='/' component={App} />
-        <Route path='/reviews' component={Reviews} />
         <Route path='/contact' component={Contact} />
+        <Route path='/reviews' component={Reviews} />
+        <Route exact path='/' component={App} />
     </Switch>
 </Router>, document.getElementById('root'));
 
