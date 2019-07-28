@@ -1,7 +1,7 @@
 import React, {  useState, useEffect } from 'react';
 import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Modal, Row, Col, Icon } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
-import { getAvailableSlots, booNewAppointment } from '../../api';
+import { getAvailableSlots, booNewAppointment, sendOTPToUser } from '../../api';
 import moment from 'moment';
 import { userIsOnMobile } from '../../utils';
 import doctor from '../../assets/doctor.png';
@@ -44,7 +44,7 @@ function hasErrors(fieldsError) {
         const [ isInApiCall, setIsInApiCall ] = useState(false);        
         const _reCaptchaRef = React.createRef();
         
-        const userData = {
+        let userData = {
             otp: OTP,
             name: name,
             age: age,
@@ -93,10 +93,10 @@ function hasErrors(fieldsError) {
         )
 
         const steps = [
-            // {
-            //   title: 'Enter OTP',
-            //   content: OtpJsx,
-            // },
+            {
+              title: 'Enter OTP',
+              content: OtpJsx,
+            },
             {
                 title: 'Done',
                 content: doneJsx,
@@ -110,7 +110,7 @@ function hasErrors(fieldsError) {
           }, [date]);
 
         function handleCaptchaChange(value){
-        // console.log("Captcha value:", value);
+        console.log("Captcha value:", value);
         setCaptchaValue(value);
         // if value is null recaptcha expired
         if (value === null) setExpired({ expired: "true" });
@@ -122,29 +122,21 @@ function hasErrors(fieldsError) {
 
         function bookAppointment(e){
             e.preventDefault();
-            setIsInApiCall(true);
-            // sendOTPToUser(userData)
-            //     .then(data => console.log(data));
-            // console.log(name, mobileNumber, gender, date, time, disabledHours, OTP);
             if(isFormValid()) {
-                booNewAppointment(userData)
-                        .then(data => {
-                            if (data.status === 'OK') {
-                            setIsInApiCall(false);
-                            setShowModal(true);
-                            form.resetFields();
-                            } else {
-                            message.error('Something went wrong, Please try again!');
-                            }
-    
-                        });
+                setIsInApiCall(true);
+                sendOTPToUser(userData)
+                .then(data => {
+                    setIsInApiCall(false);
+                    setShowModal(true);
+                    form.resetFields();
+                });
+                console.log(name, mobileNumber, gender, date, time, disabledHours, OTP);
+            } else {
+                message.error('Please fill all the fields');
             }
-             else {
-                 message.error('Please fill in form!')
-             }
-        }
-        
-        function onPhoneChange(e){
+                                }
+                                
+                                function onPhoneChange(e){
             setMobileNumber(e.target.value);
         }
         function onAgeChange(e){
@@ -171,19 +163,19 @@ function hasErrors(fieldsError) {
             setOTP(e.target.value);
         }
         function handleOk(e){
-            // if(OTP && captchaValue) {
-            //     message.success('Booking done successfully !');
-            //     setShowModal(false);
-            //     setName('');
-            //     setMobileNumber('');
-            //     setAgeNumber('');
-            //     setGender('');
-            //     setDate('');
-            //     setTime('');
-            //     setCurrentStep(0);
-            // } else {
-            //     message.error('Please enter correct information !');
-            // }
+            if(OTP && captchaValue) {
+                message.success('Booking done successfully !');
+                setShowModal(false);
+                setName('');
+                setMobileNumber('');
+                setAgeNumber('');
+                setGender('');
+                setDate('');
+                setTime('');
+                setCurrentStep(0);
+            } else {
+                message.error('Please enter correct information !');
+            }
             message.success('Booking done successfully !');
                 setShowModal(false);
                 setName('');
@@ -201,13 +193,16 @@ function hasErrors(fieldsError) {
 
         function goForward() {
             if( currentStep === 0 && captchaValue) {
+                setIsInApiCall(true);
                 booNewAppointment(userData)
                     .then(data => {
                         if (data.status === 'OK') {
-                            setShowModal(true);
-            form.resetFields();
-                        } else {
-                        message.error('Something went wrong, Please try again!');
+                            setCurrentStep(1);
+                            form.resetFields();
+                            setIsInApiCall(false);
+                        } else if(data.status === 'ERROR') {
+                            setIsInApiCall(false);
+                        message.error('Invalid OTP, Please try again!');
                         }
 
                     }); 
@@ -353,20 +348,22 @@ function hasErrors(fieldsError) {
                     onCancel={handleCancel}
                     >
                     <Steps current={currentStep}>
-                        {/* {steps.map(item => (
+                        {steps.map(item => (
                             <Step key={item.title} title={item.title} icon={currentStep === 0 && <Icon type="loading" />}/>
-                        ))} */}
+                        ))}
                     </Steps>
                         <div className="steps-content">{steps[currentStep].content}</div>
                         <div className="steps-action">
                     {currentStep < steps.length - 1 && (
-                        <Button type="primary" onClick={goForward}>
+                        <Button type="primary" onClick={goForward} disabled={ !OTP || isInApiCall}>
                         {currentStep === 0 ? 'Check OTP' : 'Next' }
                         </Button>
                     )}
                     {currentStep === steps.length - 1 && (
                         <Button style={{ border: 0, backgroundColor: '#60b718'}} type="primary" onClick={() => {
                             message.success('Booking done successfully !');
+                            form.resetFields();
+                            userData = {};
                             setShowModal(false);
                             }}>
                         Done
