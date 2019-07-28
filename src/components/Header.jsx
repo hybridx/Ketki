@@ -11,7 +11,7 @@ const menu = (
   <Menu className="mobile-dropdown-menu">
     <Menu.Item key="0">
       <NavLink to={"/reviews"} activeClassName="nav_active">
-        Testimonials
+        Testimonials & Reviews
       </NavLink>
     </Menu.Item>
     <Menu.Item key="1">
@@ -58,7 +58,7 @@ const Header = () => (
         <ul className="nav-list">
           <li className="li-links">
             <NavLink to={"/reviews"} activeClassName="nav_active">
-              Testimonials
+              Testimonials and reviews
             </NavLink>
           </li>
           <li className="li-links">

@@ -41,6 +41,7 @@ function hasErrors(fieldsError) {
         const [captchaValue, setCaptchaValue] = useState();
         const [setExpired] = useState('false');
         const [ disabledHours, setDisabledHours ] = useState([]);
+        const [ isInApiCall, setIsInApiCall ] = useState(false);        
         const _reCaptchaRef = React.createRef();
         
         const userData = {
@@ -121,6 +122,7 @@ function hasErrors(fieldsError) {
 
         function bookAppointment(e){
             e.preventDefault();
+            setIsInApiCall(true);
             // sendOTPToUser(userData)
             //     .then(data => console.log(data));
             // console.log(name, mobileNumber, gender, date, time, disabledHours, OTP);
@@ -128,6 +130,7 @@ function hasErrors(fieldsError) {
                 booNewAppointment(userData)
                         .then(data => {
                             if (data.status === 'OK') {
+                            setIsInApiCall(false);
                             setShowModal(true);
                             form.resetFields();
                             } else {
@@ -137,7 +140,7 @@ function hasErrors(fieldsError) {
                         });
             }
              else {
-                 message.error('Something went wrong!')
+                 message.error('Please fill in form!')
              }
         }
         
@@ -167,11 +170,6 @@ function hasErrors(fieldsError) {
         function onOTPChange(e){
             setOTP(e.target.value);
         }
-
-        // function showModal(params) {
-        //     setShowModal(true);
-        // }
-
         function handleOk(e){
             // if(OTP && captchaValue) {
             //     message.success('Booking done successfully !');
@@ -335,8 +333,11 @@ function hasErrors(fieldsError) {
             </Col>
             <Col md={12} sm={6}>
                 <Form.Item>
-                    <Button onClick={isFormValid() && !hasErrors(getFieldsError())} type="primary" size="large"  htmlType="submit" style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError())}>
-                        Book Appointment
+                    <Button onClick={
+                        isFormValid() && !hasErrors(getFieldsError())
+                        }
+                    type="primary" size="large"  htmlType="submit" style={{ width: '100%', border: 0, backgroundColor: '#60b718'}} disabled={hasErrors(getFieldsError()) || isInApiCall}>
+                    Book Appointment
           </Button>
                 </Form.Item>
                 </Col>
@@ -364,7 +365,10 @@ function hasErrors(fieldsError) {
                         </Button>
                     )}
                     {currentStep === steps.length - 1 && (
-                        <Button style={{ border: 0, backgroundColor: '#60b718'}} type="primary" onClick={() => message.success('Booking done successfully !')}>
+                        <Button style={{ border: 0, backgroundColor: '#60b718'}} type="primary" onClick={() => {
+                            message.success('Booking done successfully !');
+                            setShowModal(false);
+                            }}>
                         Done
                         </Button>
                     )}
