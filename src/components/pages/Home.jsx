@@ -103,7 +103,17 @@ function hasErrors(fieldsError) {
           }, [date]);
 
         function handleReset(){
+            console.log('reset')
             form.resetFields();
+            setShowModal(false);
+            setShowModal(false);
+            setName('');
+            setMobileNumber('');
+            setAgeNumber('');
+            setGender('');
+            setDate('');
+            setTime('');
+            setCurrentStep(0);
             userData = {}
           };
 
@@ -166,6 +176,15 @@ function hasErrors(fieldsError) {
 
         function handleCancel(e){
             setShowModal(false);
+            form.resetFields();
+            setShowModal(false);
+            setName('');
+            setMobileNumber('');
+            setAgeNumber('');
+            setGender('');
+            setDate('');
+            setTime('');
+            userData = {};
         };
 
         function goForward() {
@@ -311,7 +330,7 @@ function hasErrors(fieldsError) {
                 <Row gutter={16}>
                     <Col md={12} sm={6}>
                     <Form.Item>
-                    <Button onClick={handleReset} type="normal" size="large"  htmlType="submit" style={{ width: '100%'}}>
+                    <Button onClick={handleReset} type="normal" size="large" style={{ width: '100%'}}>
                         RESET
                       </Button>
                         </Form.Item>
