@@ -61,7 +61,7 @@ const Reviews = () => {
             </p>
           </div>
           {/* <div id="google-reviews"></div> */}
-          <hr />
+          <hr style={{ margin: "50px 0" }} />
           <h1 class="primary-text"> Reviews </h1>
           <div className="reviews-parent" id="review-parent">
             {showReviews}

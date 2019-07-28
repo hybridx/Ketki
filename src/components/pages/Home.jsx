@@ -1,10 +1,14 @@
 import React, {  useState, useEffect } from 'react';
-import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Modal, Row, Col, Icon } from 'antd';
-import ReCAPTCHA from "react-google-recaptcha";
+import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Modal, Row, Col, Icon, Carousel } from 'antd';
 import { getAvailableSlots, booNewAppointment, sendOTPToUser } from '../../api';
 import moment from 'moment';
 import { userIsOnMobile } from '../../utils';
 import doctor from '../../assets/doctor.png';
+import one from '../../assets/1.jpg';
+import two from '../../assets/2.jpg';
+import three from '../../assets/3.jpg';
+import four from '../../assets/4.jpg';
+
 
 const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const { Option } = Select;
@@ -38,11 +42,9 @@ function hasErrors(fieldsError) {
         const [time, setTime ] = useState('');
         const [currentStep, setCurrentStep] = useState(0);
         const [OTP, setOTP] = useState('');
-        const [captchaValue, setCaptchaValue] = useState();
         const [setExpired] = useState('false');
         const [ disabledHours, setDisabledHours ] = useState([]);
         const [ isInApiCall, setIsInApiCall ] = useState(false);        
-        const _reCaptchaRef = React.createRef();
         
         let userData = {
             otp: OTP,
@@ -67,15 +69,6 @@ function hasErrors(fieldsError) {
             <Input type="number" size="large" placeholder="Enter OTP" onChange={onOTPChange} 
             className={'inputClass'}
             required />
-            </div>
-                <div class="content-box">
-                <ReCAPTCHA
-                    style={{ display: "inline-block" }}
-                    theme="light"
-                    ref={_reCaptchaRef}
-                    sitekey={TEST_SITE_KEY}
-                    onChange={handleCaptchaChange}
-                />
             </div>
         </React.Fragment>
         )
@@ -109,15 +102,9 @@ function hasErrors(fieldsError) {
             .then(data => { setDisabledHours(data.bookedSlots) })
           }, [date]);
 
-        function handleCaptchaChange(value){
-        console.log("Captcha value:", value);
-        setCaptchaValue(value);
-        // if value is null recaptcha expired
-        if (value === null) setExpired({ expired: "true" });
-        };
-
         function handleReset(){
             form.resetFields();
+            userData = {}
           };
 
         function bookAppointment(e){
@@ -163,7 +150,7 @@ function hasErrors(fieldsError) {
             setOTP(e.target.value);
         }
         function handleOk(e){
-            if(OTP && captchaValue) {
+            if(OTP) {
                 message.success('Booking done successfully !');
                 setShowModal(false);
                 setName('');
@@ -172,19 +159,9 @@ function hasErrors(fieldsError) {
                 setGender('');
                 setDate('');
                 setTime('');
-                setCurrentStep(0);
             } else {
                 message.error('Please enter correct information !');
             }
-            message.success('Booking done successfully !');
-                setShowModal(false);
-                setName('');
-                setMobileNumber('');
-                setAgeNumber('');
-                setGender('');
-                setDate('');
-                setTime('');
-                setCurrentStep(0);
         };
 
         function handleCancel(e){
@@ -192,7 +169,7 @@ function hasErrors(fieldsError) {
         };
 
         function goForward() {
-            if( currentStep === 0 && captchaValue) {
+            if( currentStep === 0) {
                 setIsInApiCall(true);
                 booNewAppointment(userData)
                     .then(data => {
@@ -207,16 +184,13 @@ function hasErrors(fieldsError) {
 
                     }); 
             }
-             else if(!captchaValue) {
-                message.error('Please check captcha!');
-            }
         }
         function goBackward() {
             setCurrentStep(currentStep - 1);
           }
 
         function isFormValid() {
-            return name && mobileNumber && gender && date && time;
+            return (name && mobileNumber && gender && date && time) && !(Object.entries(userData).length === 0 && userData.constructor === Object);
         }
         const datePrefixSelector = getFieldDecorator('prefix', {
             initialValue: '91',
@@ -229,7 +203,23 @@ function hasErrors(fieldsError) {
       return (
           <React.Fragment>
           <Row className="home">
-                {userIsOnMobile() && <img src={doctor} alt="doctor" width="100%" />}
+                {userIsOnMobile() && <Carousel autoplay autoplaySpeed={3000}> 
+                    <div className="corousal-div">
+                        <img src={doctor} height="100%" width="100%" alt={doctor}/>
+                    </div>
+                    <div className="corousal-div">
+                    <img src={one} height="100%" width="100%" alt={one}/>
+                    </div>
+                    <div className="corousal-div">
+                    <img src={two} height="100%" width="100%" alt={two}/>
+                    </div>
+                    <div className="corousal-div">
+                    <img src={three} height="100%" width="100%" alt={three}/>
+                    </div>
+                    <div className="corousal-div">
+                    <img src={four} height="100%" width="100%" alt={four}/>
+                    </div>
+                </Carousel>}
               <Col sm={24} md={12}>
             <Form {...formItemLayout} onSubmit={bookAppointment} className="signUpForm">
                 <Row>

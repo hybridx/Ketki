@@ -224,6 +224,9 @@ input.widthInputStyle {
 }
 
 @media screen and (max-width: 60em) {
+  h2 {
+    font-size: 20px !important;
+  }
   .rc-container {
     grid-template-rows: repeat(12, 1fr);
     grid-template-columns: repeat(1, 1fr);
@@ -337,4 +340,9 @@ code {
 /**Custom antd styles**/
 div.ant-time-picker-panel-select {
   width: 84px;
+}
+
+.corousal-div {
+  height: 250px;
+  background-color: #133c11;
 }
