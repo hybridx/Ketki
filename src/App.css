@@ -346,3 +346,7 @@ div.ant-time-picker-panel-select {
   height: 250px;
   background-color: #133c11;
 }
+
+.timePicker {
+  width: 10rem;
+}

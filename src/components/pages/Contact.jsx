@@ -96,7 +96,7 @@ const WrappedContactForm = ({ form }) => {
           </p>
           <p level={4} style={{ color: "#007FFF" }}>
             {" "}
-            Reg No. I-49369-A
+            Reg No.I49639
           </p>
           <Title level={2} style={{ color: "#007FFF" }}>
             Clinic Address{" "}
@@ -128,7 +128,7 @@ const WrappedContactForm = ({ form }) => {
             Hours{" "}
           </Title>
           <p level={4} style={{ color: "#007FFF" }}>
-            10 AM - 8 PM{" "}
+            11 to 7 PM{" "}
             <span>
               <Switch
                 checkedChildren="Open"

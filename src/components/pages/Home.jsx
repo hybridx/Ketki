@@ -1,5 +1,5 @@
 import React, {  useState, useEffect } from 'react';
-import { Form, Steps, Input, message, Button, DatePicker, TimePicker, Select, Modal, Row, Col, Icon, Carousel } from 'antd';
+import { Form, Steps, Input, message, Button, DatePicker , TimePicker, Select, Modal, Row, Col, Icon, Carousel } from 'antd';
 import { getAvailableSlots, booNewAppointment, sendOTPToUser } from '../../api';
 import moment from 'moment';
 import { userIsOnMobile } from '../../utils';
@@ -9,11 +9,11 @@ import two from '../../assets/2.jpg';
 import three from '../../assets/3.jpg';
 import four from '../../assets/4.jpg';
 
+const { confirm } = Modal; 
 
-const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const { Option } = Select;
 const { Step } = Steps;
-const format = 'HH';
+const format = 'HH:mm';
 
 function hasErrors(fieldsError) {
         return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -42,7 +42,7 @@ function hasErrors(fieldsError) {
         const [time, setTime ] = useState('');
         const [currentStep, setCurrentStep] = useState(0);
         const [OTP, setOTP] = useState('');
-        const [setExpired] = useState('false');
+        const [timePickerstate, setTimePickerstate] = useState(false);
         const [ disabledHours, setDisabledHours ] = useState([]);
         const [ isInApiCall, setIsInApiCall ] = useState(false);        
         
@@ -103,18 +103,26 @@ function hasErrors(fieldsError) {
           }, [date]);
 
         function handleReset(){
-            console.log('reset')
-            form.resetFields();
-            setShowModal(false);
-            setShowModal(false);
-            setName('');
-            setMobileNumber('');
-            setAgeNumber('');
-            setGender('');
-            setDate('');
-            setTime('');
-            setCurrentStep(0);
-            userData = {}
+            confirm({
+                title: 'Do you Want to reset fields?',
+                content: '',
+                onOk() {
+                    form.resetFields();
+                    setShowModal(false);
+                    setShowModal(false);
+                    setName('');
+                    setMobileNumber('');
+                    setAgeNumber('');
+                    setGender('');
+                    setDate('');
+                    setTime('');
+                    setCurrentStep(0);
+                    userData = {};
+                },
+                onCancel() {
+                  
+                },
+              });
           };
 
         function bookAppointment(e){
@@ -127,7 +135,6 @@ function hasErrors(fieldsError) {
                     setShowModal(true);
                     form.resetFields();
                 });
-                console.log(name, mobileNumber, gender, date, time, disabledHours, OTP);
             } else {
                 message.error('Please fill all the fields');
             }
@@ -146,6 +153,7 @@ function hasErrors(fieldsError) {
         
         function onTimeChange(timeObj, timeString){
             setTime(timeString.substr(0,2));
+            setTimePickerstate(false);
         }
         
         function onDateChange(dateObj, dateString){
@@ -159,20 +167,20 @@ function hasErrors(fieldsError) {
         function onOTPChange(e){
             setOTP(e.target.value);
         }
-        function handleOk(e){
-            if(OTP) {
-                message.success('Booking done successfully !');
-                setShowModal(false);
-                setName('');
-                setMobileNumber('');
-                setAgeNumber('');
-                setGender('');
-                setDate('');
-                setTime('');
-            } else {
-                message.error('Please enter correct information !');
-            }
-        };
+        // function handleOk(e){
+        //     if(OTP) {
+        //         message.success('Booking done successfully !');
+        //         setShowModal(false);
+        //         setName('');
+        //         setMobileNumber('');
+        //         setAgeNumber('');
+        //         setGender('');
+        //         setDate('');
+        //         setTime('');
+        //     } else {
+        //         message.error('Please enter correct information !');
+        //     }
+        // };
 
         function handleCancel(e){
             setShowModal(false);
@@ -185,6 +193,7 @@ function hasErrors(fieldsError) {
             setDate('');
             setTime('');
             userData = {};
+            message.error('Booking canceled!');
         };
 
         function goForward() {
@@ -252,7 +261,7 @@ function hasErrors(fieldsError) {
                             size="large" 
                             className={'inputClass'}
                             onChange={onNameChange}
-                            value={name}
+                            setFieldsValue={name}
                         />,
                     )}
                 </Form.Item>
@@ -264,7 +273,7 @@ function hasErrors(fieldsError) {
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Phone no. should be 10 digit!', min: 10, max: 10 }],
                         })(<Input type="number" size="large" placeholder="Enter phone number" onChange={onPhoneChange} addonBefore={datePrefixSelector} 
-                        className={'inputClass'} value={mobileNumber} />)}
+                        className={'inputClass'} valsetFieldsValue={mobileNumber} />)}
                 </Form.Item>
                 </Col>
                 <Col md={8} >
@@ -278,7 +287,7 @@ function hasErrors(fieldsError) {
                             placeholder="Gender"
                             onChange={onGenderChange}
                             size="large" 
-                            value={gender}
+                            setFieldsValue={gender}
                             style={{ width: '100%'}}
                         >
                             <Option value="m">Male</Option>
@@ -293,7 +302,7 @@ function hasErrors(fieldsError) {
                         {getFieldDecorator('age', {
                             rules: [{ required: true, message: 'Please Enter age!', max: 2, min: 1 }],
                         })(
-                            <Input type="number" className={'widthInputStyle'} size="large" placeholder="Age" onChange={onAgeChange} value={age} style={{ width: '100%'}}/>
+                            <Input type="number" className={'widthInputStyle'} size="large" placeholder="Age" onChange={onAgeChange} setFieldsValue={age} style={{ width: '100%'}}/>
                         )}
                     </Form.Item>
                     </Col>
@@ -311,7 +320,7 @@ function hasErrors(fieldsError) {
                         disabledDate={(current) => (
                             current && current > moment(new Date()).add(15, 'd') || current.valueOf() < moment().subtract(1, 'd')
                           )}
-                        value={date}
+                          setFieldsValue={date}
                         style={{ width: '100%'}}
                         />
                     )}
@@ -322,7 +331,9 @@ function hasErrors(fieldsError) {
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please select time!' }],
                     })(
-                        <TimePicker onChange={onTimeChange} size="large" format={format} style={{ width: '100%'}} disabledHours={() => disabledHours} value={time} disabled={!date}
+                        <TimePicker open={timePickerstate} 
+                        onOpenChange={() => setTimePickerstate(true)}
+                        className='timePicker' onChange={onTimeChange} minuteStep={60} size="large" format={format} style={{ width: '100%'}} disabledHours={() => disabledHours} setFieldsValue={time} disabled={!date}
                      />
                     )}
                 </Form.Item>
@@ -353,8 +364,13 @@ function hasErrors(fieldsError) {
                     width={700}
                     title="Confirmation"
                     visible={visible}
-                    onOk={handleOk}
                     onCancel={handleCancel}
+                    maskClosable={false}
+                    footer={[
+                        <Button key="back" onClick={handleCancel}>
+                          Close
+                        </Button>,
+                      ]}
                     >
                     <Steps current={currentStep}>
                         {steps.map(item => (

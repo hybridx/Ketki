@@ -24,9 +24,11 @@ const Reviews = () => {
       <Header />
       <div class="reviews">
         <div>
-          <h1 class="primary-text"> इंजेकशन (Applicator) ची ठळक वैशिष्ट्ये </h1>
+          <h1 class="primary-text"> Features </h1>
+
+          {/* <h1 class="primary-text"> इंजेकशन (Applicator) ची ठळक वैशिष्ट्ये </h1> */}
           <div>
-            <p>
+            {/* <p>
               १. भारत सरकार द्वारा मान्यता प्राप्त ( पेटंट प्राप्त ) देशातील
               एकमेव इंजेकशन (Applicator){" "}
             </p>
@@ -61,7 +63,17 @@ const Reviews = () => {
             <p>
               ९. इतर उपचाराचे पुन्हा पुन्हा होणारे मूळव्याध व गुदभागाचे आजार या
               इंजेकशनमुळे (Applicator) शक्यतो परत होत नाहीत.
+            </p> */}
+            <p>1) 100 percent Ayurvedic Injection (Applicator) </p>
+            <p>2) Instantly Stops Bleeding PerRectal </p>
+            <p>3) Instantly Minimises Paining </p>
+            <p>4) Easy going treatment </p>
+            <p>5) No need of admition for treatment </p>
+            <p>
+              6) During Treatment No Burden or Restrictions on diet except Sour
+              eatables{" "}
             </p>
+            <p>7) Probably Non-recurring treatment for Piles </p>
           </div>
           {/* <div id="google-reviews"></div> */}
           <hr style={{ margin: "50px 0" }} />
