@@ -99,6 +99,17 @@ const WrappedContactForm = ({ form }) => {
             Reg No.I49639
           </p>
           <Title level={2} style={{ color: "#007FFF" }}>
+            Dr. Annu Saikh{" "}
+          </Title>
+          <p level={4} style={{ color: "#007FFF" }}>
+            Ladies Ano-Rectal Consultant{" "}
+          </p>
+          <p level={4} style={{ color: "#007FFF" }}>
+            {" "}
+            B.A.M.S. RGHS (Banglore),
+          </p>
+
+          <Title level={2} style={{ color: "#007FFF" }}>
             Clinic Address{" "}
           </Title>
           <p level={4} style={{ color: "#007FFF" }}>

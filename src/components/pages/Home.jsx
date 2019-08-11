@@ -79,8 +79,8 @@ function hasErrors(fieldsError) {
             <h2> {name}! </h2>
             <br />
             <h2> your appointment is now confirmed.</h2>
-            <h3>Date: {date} time: {time}</h3>
-            <br />            
+            <h3>Date: {date} time: {time}:00 Hrs</h3>
+            <br />
             <h3>Thank You</h3>
             </div>
         )
