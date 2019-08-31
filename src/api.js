@@ -1,75 +1,91 @@
-import { API_URL } from './constants';
+import { API_URL } from "./constants";
 
-export const getAvailableSlots = ({name, age, date, phone, time, gender, otp}) => {
-    let data = new FormData();
-    data.append('name', name);
-    data.append('date', date);
-    data.append('phone', phone);
-    data.append('age', parseInt(age));
-    data.append('time', time);
-    data.append('gender', gender);
-    data.append('otp', parseInt(otp));
+export const getAvailableSlots = ({
+  name,
+  age,
+  date,
+  phone,
+  time,
+  gender,
+  otp
+}) => {
+  let data = new FormData();
+  data.append("name", name);
+  data.append("date", date);
+  data.append("phone", phone);
+  data.append("age", parseInt(age));
+  data.append("time", time);
+  data.append("gender", gender);
+  data.append("otp", parseInt(otp));
 
-    return fetch(`${API_URL}availableSlots`, {
-        method: 'POST',
-        body: data,
-    })
+  return fetch(`${API_URL}availableSlots`, {
+    method: "POST",
+    body: data
+  })
     .then(response => response.json())
     .then(data => data)
-    .catch(err => err)
-}
+    .catch(err => err);
+};
 
-export const sendOTPToUser = ({name, date, age, phone, time, gender}) => {
-    let data = new FormData();
-    
-    data.append('name', name);
-    data.append('date', date);
-    data.append('age', parseInt(age));
-    data.append('phone', phone);
-    data.append('time', time);
-    data.append('gender', gender);
+export const sendOTPToUser = ({ name, date, age, phone, time, gender }) => {
+  let data = new FormData();
 
-    return fetch(`${API_URL}OTP`, {
-        method: 'POST',
-        body: data,
-    })
+  data.append("name", name);
+  data.append("date", date);
+  data.append("age", parseInt(age));
+  data.append("phone", phone);
+  data.append("time", time);
+  data.append("gender", gender);
+
+  return fetch(`${API_URL}OTP`, {
+    method: "POST",
+    body: data
+  })
     .then(response => response.json())
     .then(data => data)
-    .catch(err => err)
-}
+    .catch(err => err);
+};
 
-export const booNewAppointment = ({name, age, date, phone, time, gender, otp}) => {
-    let data = new FormData();
-    
-    data.append('name', name);
-    data.append('date', date);
-    data.append('phone', phone);
-    data.append('age', parseInt(age));
-    data.append('time', time);
-    data.append('gender', gender);
-    data.append('otp', parseInt(otp));
+export const booNewAppointment = ({
+  name,
+  age,
+  date,
+  phone,
+  time,
+  gender,
+  otp
+}) => {
+  let data = new FormData();
 
-    return fetch(`${API_URL}book`, {
-        method: 'POST',
-        body: data,
-    })
+  data.append("name", name);
+  data.append("date", date);
+  data.append("phone", phone);
+  data.append("age", parseInt(age));
+  data.append("time", time);
+  data.append("gender", gender);
+  data.append("otp", parseInt(otp));
+
+  return fetch(`${API_URL}book`, {
+    method: "POST",
+    body: data
+  })
     .then(response => response.json())
     .then(data => data)
-    .catch(err => err)
-}
+    .catch(err => err);
+};
 
-export const sendMessage = (name, email, message) => {
-    let data = new FormData();
-    
-    data.append('name', name);
-    data.append('email', email);
-    data.append('message', message);
+export const sendMessage = (name, email, abc) => {
+  let data = new FormData();
 
-    return fetch(`${API_URL}contactUs`, {
-        method: 'POST',
-        body: data,
-    })
+  data.append("name", name);
+  data.append("email", email);
+  data.append("message", abc);
+
+  return fetch(`${API_URL}contactUs`, {
+    method: "POST",
+    body: data
+  })
     .then(response => response.json())
     .then(data => data)
-    .catch(err => err)
-}
+    .catch(err => err);
+};

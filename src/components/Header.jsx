@@ -58,7 +58,7 @@ const Header = () => (
         <ul className="nav-list">
           <li className="li-links">
             <NavLink to={"/reviews"} activeClassName="nav_active">
-              Testimonials and reviews
+              Testimonials and Booking
             </NavLink>
           </li>
           <li className="li-links">

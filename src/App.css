@@ -5,6 +5,7 @@ html {
   color: #fff;
   background: white;
   font-family: Montserrat, sans-serif;
+  line-height: 1;
 }
 
 .header .logo-image {
@@ -24,11 +25,11 @@ html {
 .primary-text {
   color: #60b718;
   font-weight: 900;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .home {
-  background-image: url(assets/doctor.png);
+  /* background-image: url(assets/doctor.png); */
   background-size: cover;
   height: calc(100% - 5rem) !important;
   z-index: 0;
@@ -63,7 +64,7 @@ a {
 }
 
 .reviews {
-  margin-top: 4rem;
+  margin-top: 2rem;
   padding: 0 1rem;
   color: #707070;
 }
@@ -84,7 +85,7 @@ a {
   margin-top: 16px;
   width: 100%;
   background-color: #60b718;
-  padding: 2rem;
+  padding: 2rem 1rem;
 }
 
 .nav {
@@ -125,7 +126,7 @@ li:hover {
 
 .signUpForm {
   margin: 0 5rem !important;
-  padding-top: 8rem !important;
+  padding-top: 2rem !important;
 }
 
 .contact-container {
@@ -180,12 +181,23 @@ li:hover {
   font-size: 1.2rem;
 }
 
-.grid-3 .grid-6 .grid-9 .grid-12,
-.reviewBox div {
-  -webkit-transition: -webkit-transform 0.2s;
-  transition: -webkit-transform 0.2s;
-  transition: transform 0.2s;
-  transition: transform 0.2s, -webkit-transform 0.2s;
+.pop-over {
+  position: absolute;
+  top: 22%;
+  height: 20rem;
+  left: 3rem;
+  background: #0000006b;
+  width: 40rem;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.pop-over div {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .contactFormLeftPane,
@@ -223,7 +235,16 @@ input.widthInputStyle {
   margin: 0 !important;
 }
 
+.corousal-div {
+  height: calc(100vh - 4.5rem);
+  background-color: #133c11;
+}
+
 @media screen and (max-width: 60em) {
+  .corousal-div {
+    height: 250px;
+    background-color: #133c11;
+  }
   h2 {
     font-size: 20px !important;
   }
@@ -248,8 +269,8 @@ input.widthInputStyle {
   }
 
   .signUpForm {
-    margin: 0 2rem !important;
-    padding-top: 4rem !important;
+    margin: 0 1rem !important;
+    padding-top: 2rem !important;
   }
 
   .footer {
@@ -285,6 +306,10 @@ input.widthInputStyle {
 
   .home {
     background-image: none;
+  }
+
+  .pop-over {
+    display: none;
   }
 }
 
@@ -341,12 +366,66 @@ code {
 div.ant-time-picker-panel-select {
   width: 84px;
 }
-
-.corousal-div {
-  height: 250px;
-  background-color: #133c11;
-}
-
 .timePicker {
   width: 10rem;
+}
+
+.scroll-down {
+  opacity: 1;
+  -webkit-transition: all 0.5s ease-in 3s;
+  transition: all 0.5s ease-in 3s;
+}
+
+.scroll-down {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  margin-left: -16px;
+  display: block;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #fff;
+  background-size: 14px auto;
+  border-radius: 50%;
+  z-index: 2;
+  -webkit-animation: bounce 2s infinite 2s;
+  animation: bounce 2s infinite 2s;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  transform: scale(1);
+}
+
+.scroll-down:before {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: calc(50% - 6px);
+  transform: rotate(-45deg);
+  display: block;
+  width: 12px;
+  height: 12px;
+  content: "";
+  border: 2px solid white;
+  border-width: 0px 0 2px 2px;
+}
+
+@keyframes bounce {
+  0%,
+  100%,
+  20%,
+  50%,
+  80% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
 }
