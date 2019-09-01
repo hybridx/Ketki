@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Carousel, Button } from "antd";
 import Features from "../Features";
-import { ClinicAddress, Doctor, Timing } from "../ContactSubcomponents";
+import { ClinicAddress, Doctor, Timing, Branches } from "../ContactSubcomponents";
 import { withRouter } from "react-router-dom";
 import { scrollToBottom, userIsOnMobile, scrollToTop } from "../../utils";
 import syringe from "../../assets/syringe-solid.svg";
@@ -37,12 +37,30 @@ const Home = ({ history }) => {
           <div className="pop-over">
             <div>
               <h1 class="primary-text"> Our Speciality </h1>
+              <ul class="speciality-items">
+                <li>
+                  Piles
+                </li>
+                <li>
+                  Fissure
+                </li>
+                <li>
+                  Fistula
+                </li>
+                <li>
+                  Pilonidal Sinus
+                </li>
+              </ul>
               <p>
-                100 percent Ayur vedic Injection (Applicator){" "}
+                100 percent Ayurvedic Injection (Applicator){" "}
                 {/* <img src={syringe} height="20px" width="20px" alt="syringe" /> */}
               </p>
               <p>
-                Instantly Stops Bleeding Prerectal{" "}
+                Instantly stops perectal bleeding {" "}
+                {/* <img src={syringe} height="20px" width="20px" alt="syringe" /> */}
+              </p>
+              <p>
+                No admission & No surgery
                 {/* <img src={syringe} height="20px" width="20px" alt="syringe" /> */}
               </p>
               <p>
@@ -78,13 +96,16 @@ const Home = ({ history }) => {
         </Col>
       </Row>
       <Row className="reviews">
-        <Col xs={24} md={8}>
+        <Col xs={24} md={6}>
           <Doctor />
         </Col>
-        <Col xs={24} md={8}>
+        <Col xs={24} md={6}>
           <ClinicAddress />
         </Col>
-        <Col xs={24} md={8}>
+        <Col xs={24} md={6}>
+          <Branches />
+        </Col>
+        <Col xs={24} md={6}>
           <Timing />
         </Col>
       </Row>

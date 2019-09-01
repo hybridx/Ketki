@@ -34,7 +34,13 @@ const Reviews = () => {
         </Row>
         {/* <div id="google-reviews"></div> */}
         <hr style={{ margin: "50px 0" }} />
-        <h1 class="primary-text"> Reviews </h1>
+        <h1 class="primary-text">
+          Reviews
+          &nbsp;
+          <small>
+          (Total Count) 95% reviews are Rated 5.0 of 5
+          </small> 
+        </h1>
         <div className="reviews-parent" id="review-parent">
           {showReviews}
         </div>

@@ -28,6 +28,11 @@ html {
   font-size: 1.5rem;
 }
 
+.primary-text small {
+  font-weight: 500; 
+  font-size: 60%
+}
+
 .home {
   /* background-image: url(assets/doctor.png); */
   background-size: cover;
@@ -184,7 +189,7 @@ li:hover {
 .pop-over {
   position: absolute;
   top: 22%;
-  height: 20rem;
+  height: 25rem;
   left: 3rem;
   background: #0000006b;
   width: 40rem;
@@ -195,9 +200,6 @@ li:hover {
 
 .pop-over div {
   padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .contactFormLeftPane,
@@ -428,4 +430,14 @@ div.ant-time-picker-panel-select {
     -ms-transform: translateY(-5px);
     transform: translateY(-5px);
   }
+}
+
+.speciality-items {
+  display: flex;
+  padding: 0;
+}
+
+.speciality-items li {
+  margin-left: 3rem;
+  list-style-image: url("https://img.icons8.com/ultraviolet/24/000000/syringe.png");
 }

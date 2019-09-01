@@ -4,7 +4,7 @@ const { Title } = Typography;
 
 export const Call = () => (
   <Fragment>
-    <Title level={2} style={{ color: "#007FFF" }}>
+    <Title level={3} style={{ color: "#007FFF" }}>
       Call{" "}
     </Title>
     <p level={4} style={{ color: "#007FFF" }}>
@@ -15,7 +15,7 @@ export const Call = () => (
 
 export const Doctor = () => (
   <Fragment>
-    <Title level={2} style={{ color: "#007FFF" }}>
+    <Title level={3} style={{ color: "#007FFF" }}>
       Dr. Shivshankar B. Biradar{" "}
     </Title>
     <p level={4} style={{ color: "#007FFF" }}>
@@ -29,12 +29,48 @@ export const Doctor = () => (
       {" "}
       Reg No.I49639
     </p>
+    <Title level={3} style={{ color: "#007FFF" }}>
+      Dr. Annu Saikh{" "}
+    </Title>
+    <p level={4} style={{ color: "#007FFF" }}>
+      Ladies Ano-Rectal Consultant{" "}
+    </p>
+    <p level={4} style={{ color: "#007FFF" }}>
+      {" "}
+      B.A.M.S. RGHS (Banglore),
+  </p>
+  </Fragment>
+);
+
+export const Branches = () => (
+  <Fragment>
+    <Title level={3} style={{ color: "#007FFF" }}>
+      Branches & Working Days{" "}
+    </Title>
+    <p level={4} style={{ color: "#007FFF" }}>
+      {" "}
+      <b>Pune: </b> <p level={4} style={{ color: "#007FFF" }}>
+        Sunday, Monday, Tuesday
+      </p>
+    </p>
+    <p level={4} style={{ color: "#007FFF" }}>
+      {" "}
+      <b> Latur: </b> <p level={4} style={{ color: "#007FFF" }}>
+        Thursday
+      </p>
+    </p>
+    <p level={4} style={{ color: "#007FFF" }}>
+      {" "}
+      <b> Nanded: </b> <p level={4} style={{ color: "#007FFF" }}>
+        Friday, Saturday
+      </p>
+    </p>
   </Fragment>
 );
 
 export const ClinicAddress = () => (
   <Fragment>
-    <Title level={2} style={{ color: "#007FFF" }}>
+    <Title level={3} style={{ color: "#007FFF" }}>
       Clinic Address{" "}
     </Title>
     <p level={4} style={{ color: "#007FFF" }}>
@@ -65,11 +101,11 @@ export const ClinicAddress = () => (
 
 export const Timing = () => (
   <Fragment>
-    <Title level={2} style={{ color: "#007FFF" }}>
-      Hours{" "}
+    <Title level={3} style={{ color: "#007FFF" }}>
+      Working Hours{" "}
     </Title>
     <p level={4} style={{ color: "#007FFF" }}>
-      11 to 7 PM{" "}
+      11 AM to 7 PM{" "}
       <span>
         <Switch
           checkedChildren="Open"

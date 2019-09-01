@@ -86,7 +86,7 @@ const WrappedContactForm = ({ form }) => {
         <Col md={12} sm={24} className="contact-left-pane">
           <p class="primary-text"> Contact</p>
           <Doctor />
-          <Title level={2} style={{ color: "#007FFF" }}>
+          {/* <Title level={2} style={{ color: "#007FFF" }}>
             Dr. Annu Saikh{" "}
           </Title>
           <p level={4} style={{ color: "#007FFF" }}>
@@ -95,12 +95,12 @@ const WrappedContactForm = ({ form }) => {
           <p level={4} style={{ color: "#007FFF" }}>
             {" "}
             B.A.M.S. RGHS (Banglore),
-          </p>
+          </p> */}
 
           <ClinicAddress />
           <Timing />
           <Call />
-          <Title level={2} style={{ color: "#007FFF" }}>
+          <Title level={3} style={{ color: "#007FFF" }}>
             Email{" "}
           </Title>
           <p level={4} style={{ color: "#007FFF" }}>
@@ -113,6 +113,9 @@ const WrappedContactForm = ({ form }) => {
             onSubmit={doContact}
             className="contactForm"
           >
+          <Title className="contactFormLeftPane" level={4} style={{ color: "#007FFF" }}>
+            Send Message{" "}
+          </Title>
             <Col md={24} sm={24} className="contactFormLeftPane">
               <Col md={12} sm={12}>
                 <Form.Item
@@ -167,9 +170,9 @@ const WrappedContactForm = ({ form }) => {
                   validateStatus={messegeError ? "error" : ""}
                   help={messegeError || ""}
                 >
-                  {getFieldDecorator("messege", {
+                  {getFieldDecorator("message", {
                     rules: [
-                      { required: true, message: "Please Enter Messege!" }
+                      { required: true, message: "Please Enter Message!" }
                     ]
                   })(
                     <TextArea

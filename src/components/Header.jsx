@@ -16,7 +16,7 @@ const menu = (
     </Menu.Item>
     <Menu.Item key="1">
       <NavLink to={"/contact"} activeClassName="nav_active">
-        Contact
+        Contact Us
       </NavLink>
     </Menu.Item>
     <Menu.Item key="3">
@@ -63,7 +63,7 @@ const Header = () => (
           </li>
           <li className="li-links">
             <NavLink to={"/contact"} activeClassName="nav_active">
-              Contact
+              Contact Us
             </NavLink>
           </li>
           <a
