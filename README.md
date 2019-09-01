@@ -9,3 +9,29 @@ Project for ketki clinic
     public $pass = '#cybzilla.com';
 
 ```
+
+
+### API's for ketki clinic
+
+```
+//
+availableSlots()
+
+//
+OTP()
+
+//
+book()
+
+
+//
+contactUs()
+
+
+//
+getTomorrowsBooking()
+
+//
+sendEmail()
+
+```
