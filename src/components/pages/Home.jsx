@@ -11,6 +11,7 @@ import one from "../../assets/1.jpg";
 import two from "../../assets/2.jpg";
 import three from "../../assets/3.jpg";
 import four from "../../assets/4.jpg";
+import five from "../../assets/5.jpg";
 
 const Home = ({ history }) => {
   return (
@@ -29,6 +30,18 @@ const Home = ({ history }) => {
             </div>
             <div className="corousal-div">
               <img src={three} height="100%" width="100%" alt={three} />
+            </div>
+            <div className="corousal-div">
+              <img src={four} height="100%" width="100%" alt={four} />
+            </div>
+            <div className="corousal-div">
+              <img src="https://qph.fs.quoracdn.net/main-qimg-6c005ae60d48d41f13c5f99adb2da35f.webp" height="100%" width="100%" alt={five} />
+            </div>
+            <div className="corousal-div">
+              <img src="http://www.ayurmax.com/wp-content/uploads/2017/05/piles-fissure-fistula.png" height="100%" width="100%" alt={five} />
+            </div>
+            <div className="corousal-div">
+              <img src={five} height="100%" width="100%" alt={five} />
             </div>
             <div className="corousal-div">
               <img src={four} height="100%" width="100%" alt={four} />
