@@ -35,9 +35,6 @@ const Home = ({ history }) => {
               <img src={four} height="100%" width="100%" alt={four} />
             </div>
             <div className="corousal-div">
-              <img src="https://qph.fs.quoracdn.net/main-qimg-6c005ae60d48d41f13c5f99adb2da35f.webp" height="100%" width="100%" alt={five} />
-            </div>
-            <div className="corousal-div">
               <img src="http://www.ayurmax.com/wp-content/uploads/2017/05/piles-fissure-fistula.png" height="100%" width="100%" alt={five} />
             </div>
             <div className="corousal-div">
