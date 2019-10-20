@@ -12,6 +12,7 @@ import two from "../../assets/2.jpg";
 import three from "../../assets/3.jpg";
 import four from "../../assets/4.jpg";
 import five from "../../assets/5.jpg";
+import six from "../../assets/6.png";
 
 const Home = ({ history }) => {
   return (
@@ -35,13 +36,10 @@ const Home = ({ history }) => {
               <img src={four} height="100%" width="100%" alt={four} />
             </div>
             <div className="corousal-div">
-              <img src="http://www.ayurmax.com/wp-content/uploads/2017/05/piles-fissure-fistula.png" height="100%" width="100%" alt={five} />
+              <img src={six} height="100%" width="100%" alt={five} />
             </div>
             <div className="corousal-div">
               <img src={five} height="100%" width="100%" alt={five} />
-            </div>
-            <div className="corousal-div">
-              <img src={four} height="100%" width="100%" alt={four} />
             </div>
           </Carousel>
           <div className="pop-over">

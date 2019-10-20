@@ -27,7 +27,7 @@ export const Doctor = () => (
     </p>
     <p level={4} style={{ color: "#007FFF" }}>
       {" "}
-      Reg No.I49639
+      Reg No. I-49639-A
     </p>
     <Title level={3} style={{ color: "#007FFF" }}>
       Dr. Annu Saikh{" "}
